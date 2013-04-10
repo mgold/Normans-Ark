@@ -3,6 +3,11 @@ class Sprite{
     float h, w;
     color f, s;
 
+    Sprite(){
+        x = y = h = w = 0;
+        s = f = -1;
+    }
+
     Sprite(float _x, float _y, float _h, float _w){
         x = bound(0, _x, width);
         y = bound(0, _y, height);

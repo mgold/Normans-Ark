@@ -1,12 +1,17 @@
 ArrayList<Sprite> sprites;
+DataModel data;
 
 void setup(){
     size(800,600);
     textAlign(LEFT, TOP);
     textSize(24);
 
+    data = new DataModel();
+
     sprites = new ArrayList();
-    sprites.add(new BouncyRect(10,10,50,30));
+    sprites.add(new CircleSprite(0));
+    sprites.add(new CircleSprite(1));
+
 }
 
 void draw(){
