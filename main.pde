@@ -1,8 +1,10 @@
+static final int DEFAULT_HEIGHT = 600;
+static final int DEFAULT_WIDTH = 800;
 ArrayList<Sprite> sprites;
 DataModel data;
 
 void setup(){
-    size(800,600);
+    size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     textAlign(CENTER, CENTER);
     textSize(12);
 
@@ -30,4 +32,14 @@ void draw(){
 
 void mouseClicked(){
     ;
+}
+
+void mouseMoved() {
+  for ( Sprite s : sprites ) {
+    if ( s.intersects( mouseX, mouseY ) ) {
+      s.setHighlight();
+    } else {
+      s.unsetHighlight();
+    }
+  }
 }

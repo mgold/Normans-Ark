@@ -1,11 +1,19 @@
-class Sprite{
+abstract class Sprite{
+    ColorModel colorModel = new ColorModel();
     float x, y;
     float h, w;
-    color f, s;
+    color fc, sc, dc, hc; // fill; stroke; default; highlight
 
     Sprite(){
         x = y = h = w = 0;
-        s = f = -1;
+        sc = fc = -1;
+    }
+    
+    Sprite(int id) {
+      this();
+      dc = colorModel.getColor( id );
+      fc = dc;
+      hc = colorModel.getHighlight( dc ); 
     }
 
     Sprite(float _x, float _y, float _h, float _w){
@@ -13,8 +21,8 @@ class Sprite{
         y = bound(0, _y, height);
         h = _h;
         w = _w;
-        f = #AAAAAA; // grey fill
-        s = -1; // no stroke
+        fc = #AAAAAA; // grey fill
+        sc = -1; // no stroke
     }
 
     void update(){
@@ -22,16 +30,27 @@ class Sprite{
     }
 
     void draw(){
-        if (f == -1){
+        if (fc == -1){
             noFill();
         }else{
-            fill(f);
+            fill(fc);
         }
-        if (s == -1){
+        if (sc == -1){
             noStroke();
         }else{
-            stroke(s);
+            stroke(sc);
         }
+    }
+    
+    abstract boolean intersects(int _x, int _y);
+    
+    
+    void setHighlight() {
+       fc = hc; // set the active color to the highlight value
+    }
+    
+    void unsetHighlight() {
+      fc = dc; // set the active color to the default fill value
     }
 
 }

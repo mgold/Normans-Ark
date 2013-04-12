@@ -4,13 +4,12 @@ class CircleSprite extends Sprite{
     ErrorModel model;
 
     CircleSprite(int id){
-        super();
+        super(id);
         model = data.getError(id);
         int numErrors = data.getNumErrors();
         x = (1+id)*width/(numErrors+1);
         y = height/2;
         h = w = MAXCIRCLESIZE*model.getNumFailers()/data.getNumStudents();
-        f = #AAAAAA;
     }
 
     void update(){
@@ -20,8 +19,18 @@ class CircleSprite extends Sprite{
     void draw(){
         super.draw();
         ellipse(x,y,w,h);
-        fill(#FFFFFF);
+        fill(fc);
         text(model.getName(), x, y);
+    }
+    
+    boolean intersects(int _x, int _y) {
+      float dist = sqrt( (_x - x) * (_x - x) + (_y - y) * (_y - y) );
+    
+      if (dist > w/2) {
+        return false;
+      } else {
+        return true;
+      }
     }
 
 }
