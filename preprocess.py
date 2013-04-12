@@ -91,7 +91,6 @@ if __name__ == "__main__":
     for cat in categories:
         catstr += cat+","
     print catstr[:-1]
-
     for error in errors.values():
         print error
 

@@ -1,18 +1,24 @@
 class ErrorModel{
     private String name;
-    private int failers;
+    private String category;
+    private int nfailers;
 
-    ErrorModel(String n, int flrs){
+    ErrorModel(String n, String cat, int flrs){
         name = n;
-        failers = flrs;
+        category = cat;
+        nfailers = flrs;
     }
 
     String getName(){
         return name;
     }
 
+    String getCategory(){
+        return category;
+    }
+
     int getNumFailers(){
-        return failers;
+        return nfailers;
     }
 
 }

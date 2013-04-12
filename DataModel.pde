@@ -3,8 +3,11 @@ class DataModel{
 
     DataModel(){
         errors = new ArrayList();
-        errors.add(new ErrorModel("no executable", 1));
-        errors.add(new ErrorModel("unexpected output on stderr", 3));
+        ParserModel parser = new ParserModel();
+        parser.parse("data.csv", errors);
+        if (errors == null){
+            println("errors is still null!");
+        }
     }
 
     int getNumStudents(){
@@ -12,7 +15,7 @@ class DataModel{
     }
 
     int getNumErrors(){
-        return 2;
+        return errors.size();
     }
 
     ErrorModel getError(int id){

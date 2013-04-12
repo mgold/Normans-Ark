@@ -20,6 +20,8 @@ class CircleSprite extends Sprite{
     void draw(){
         super.draw();
         ellipse(x,y,w,h);
+        fill(#FFFFFF);
+        text(model.getName(), x, y);
     }
 
 }

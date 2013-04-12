@@ -3,14 +3,15 @@ DataModel data;
 
 void setup(){
     size(800,600);
-    textAlign(LEFT, TOP);
-    textSize(24);
+    textAlign(CENTER, CENTER);
+    textSize(12);
 
     data = new DataModel();
 
-    sprites = new ArrayList();
-    sprites.add(new CircleSprite(0));
-    sprites.add(new CircleSprite(1));
+    sprites = new ArrayList(data.getNumErrors());
+    for (int i = 0; i < data.getNumErrors(); i++){
+        sprites.add(new CircleSprite(i));
+    }
 
 }
 
