@@ -12,8 +12,8 @@ class BarSprite extends Sprite {
     
     void draw(){
         super.draw();
-        rect(x,y,w,h);
         fill(fc);
+        rect(x,y,w,h);
     }
     
     boolean intersects( int _x, int _y ) {

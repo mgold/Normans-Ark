@@ -2,7 +2,7 @@ abstract class Sprite{
     ColorModel colorModel = new ColorModel();
     float x, y;
     float h, w;
-    color fc, sc, dc, hc; // fill; stroke; default; highlight
+    color fc, sc, dc, hc, tc; // fill; stroke; default; highlight; text
 
     Sprite(){
         x = y = h = w = 0;
@@ -14,6 +14,7 @@ abstract class Sprite{
       dc = colorModel.getColor( id );
       fc = dc;
       hc = colorModel.getHighlight( dc ); 
+      tc = color( 0, 0, 0 ); // TODO change this
     }
 
     Sprite(float _x, float _y, float _h, float _w){
