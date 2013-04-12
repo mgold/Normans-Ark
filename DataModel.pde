@@ -1,13 +1,11 @@
 class DataModel{
-    ArrayList<ErrorModel> errors;
+    private ArrayList<ErrorModel> errors;
+    private int nCategories;
 
     DataModel(){
         errors = new ArrayList();
         ParserModel parser = new ParserModel();
-        parser.parse("data.csv", errors);
-        if (errors == null){
-            println("errors is still null!");
-        }
+        nCategories = parser.parse("data.csv", errors);
     }
 
     int getNumStudents(){
@@ -16,6 +14,10 @@ class DataModel{
 
     int getNumErrors(){
         return errors.size();
+    }
+
+    int getNumCategories(){
+        return nCategories;
     }
 
     ErrorModel getError(int id){
