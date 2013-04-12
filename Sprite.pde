@@ -1,4 +1,7 @@
 abstract class Sprite{
+    final int DEFAULT_STROKE_WEIGHT = 3;
+    final int NO_STROKE_COLOR = -1;
+    final int STROKE_COLOR = 100;
     ColorModel colorModel = new ColorModel();
     float x, y;
     float h, w;
@@ -6,15 +9,16 @@ abstract class Sprite{
 
     Sprite(){
         x = y = h = w = 0;
-        sc = fc = -1;
+        sc = NO_STROKE_COLOR;
+        strokeWeight( DEFAULT_STROKE_WEIGHT*(width/main.DEFAULT_WIDTH) );
     }
     
     Sprite(int id) {
       this();
       dc = colorModel.getColor( id );
+      hc = colorModel.getFaded( dc ); 
+      tc = colorModel.getTextColor( id );
       fc = dc;
-      hc = colorModel.getHighlight( dc ); 
-      tc = color( 0, 0, 0 ); // TODO change this
     }
 
     Sprite(float _x, float _y, float _h, float _w){
@@ -47,11 +51,23 @@ abstract class Sprite{
     
     
     void setHighlight() {
-       fc = hc; // set the active color to the highlight value
+      sc = STROKE_COLOR;
     }
     
     void unsetHighlight() {
+      sc = NO_STROKE_COLOR;
+    }
+    
+    void fade() {
+       fc = hc; // set the active color to the highlight value
+    }
+    
+    void focus() {
       fc = dc; // set the active color to the default fill value
+    }
+    
+    boolean isFocused() {
+      return fc == dc; 
     }
 
 }

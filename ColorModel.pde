@@ -4,14 +4,17 @@ class ColorModel {
   protected final color c3 = color(225, 202, 171);
   protected final color c4 = color(254, 131, 51);
   protected final color c5 = color(150, 73, 19);
-  protected final color[] all = { c1, c2, c3, c4, c5 };
+  protected final color t1 = color(0, 0, 0);
+  protected final color t2 = color(255, 255, 255);
+  protected final color[] colors = { c1, c2, c3, c4, c5 };
+  protected final color[] text = { t2, t2, t1, 51, 52 };
   
   ColorModel() {
     
   }
   
   color[] getColors() {
-    return this.all;
+    return this.colors;
   }
   
   color getColor1() {
@@ -35,10 +38,14 @@ class ColorModel {
   }
   
   color getColor( int id ) {
-    return all[id%5]; 
+    return colors[id%5]; 
   }
   
-  color getHighlight( color c ) {
-    return color( c, 100 ); 
+  color getTextColor( int id ) {
+    return text[id%5];
+  }
+  
+  color getFaded( color c ) {
+    return color( c, 50 ); 
   }
 }
