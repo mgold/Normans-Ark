@@ -13,7 +13,8 @@ class ParserModel{
 
         for (int i=1; i<lines.length; i++){
             line = split(lines[i], ',');
-            errors.add(new ErrorModel(line[0], line[1], line.length-2));
+            errors.add(new ErrorModel(line[0], line[1], float(line[2]),
+                line.length-3));
         }
     }
 

@@ -1,4 +1,5 @@
 from sys import stderr
+from collections import Counter
 
 class Error:
     def __init__(self, name, cat):
@@ -11,10 +12,29 @@ class Error:
         self.failers.add(failer)
 
     def __str__(self):
-        ret = self.name+","+self.cat
+        ret = self.name+","+self.cat+","
+        total = 0
+        for failer in self.failers:
+            student = students[failer]
+            assert(student.hasError(self.name))
+            total += student.getScore()
+        ret += str(round(total/len(self.failers),5))
         for failer in self.failers:
             ret += ","+failer
         return ret
+
+class Student:
+    def __init__(self):
+        self.results = Counter();
+
+    def addResult(self, result):
+        self.results[result] += 1
+
+    def hasError(self, errName):
+        return errName in self.results
+
+    def getScore(self):
+        return float(self.results["passed"]) / sum(self.results.values())
 
 def genericErrors(witness):
     if "assertion" in witness:
@@ -76,16 +96,26 @@ if __name__ == "__main__":
 
     categories = set()
     errors = {}
+    students = {}
     with open(filename) as file:
         for line in file:
-            result = split(split(line, ",")[1])
-            if result[1] != "passed":
-                witness = lower(join(result[3:]))
+            words = split(split(line, ",")[1])
+            student = words[0]
+            result = words[1]
+            witness = lower(join(words[3:]))
+            if student not in students:
+                students[student] = Student()
+            if result != "passed":
                 error = errorFun(witness)
                 if error:
                     if error.name not in errors:
                         errors[error.name] = error
-                    errors[error.name].addFailer(result[0])
+                    errors[error.name].addFailer(student)
+                    students[student].addResult(error.name)
+                else:
+                    students[student].addResult(witness)
+            else:
+                students[student].addResult("passed")
 
     catstr = ""
     for cat in categories:
