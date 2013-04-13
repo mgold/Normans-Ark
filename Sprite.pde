@@ -39,6 +39,10 @@ abstract class Sprite{
 
     abstract boolean intersects(int _x, int _y);
 
+    float sortKey(){
+        return 0;
+    }
+
     void setColor(int colorID) {
       dc = colorModel.getColor(colorID);
       hc = colorModel.getFaded(dc);

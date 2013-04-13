@@ -13,6 +13,18 @@ class CircleSprite extends Sprite{
         h = w = MAXCIRCLESIZE*model.getNumFailers()/data.getNumStudents();
     }
 
+    float sortKey(){
+        return model.getGradeGivenError();
+    }
+
+    void setX(float xMin, float keyMin, float xMax, float keyMax){
+        float keyRange = keyMax - keyMin;
+        float frac = (this.sortKey() - keyMin)/keyRange;
+        float xRange = xMax - xMin;
+        x = xRange*frac + xMin;
+    }
+
+
     void update(){
         ;
     }
@@ -24,10 +36,10 @@ class CircleSprite extends Sprite{
         fill(tc);
         text(model.getName(), x, y);
     }
-    
+
     boolean intersects(int _x, int _y) {
       float dist = sqrt( (_x - x) * (_x - x) + (_y - y) * (_y - y) );
-    
+
       if (dist > w/2) {
         return false;
       } else {

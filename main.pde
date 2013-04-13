@@ -16,6 +16,24 @@ void setup(){
         sprites.add(new CircleSprite(i));
     }
 
+    float keyMin = 100;
+    float keyMax = -1;
+    for (Sprite s : sprites){
+        float sortKey = s.sortKey();
+        if (sortKey < keyMin){
+            keyMin = sortKey;
+        }
+        if (sortKey > keyMax){
+            keyMax = sortKey;
+        }
+    }
+
+    for (Sprite s : sprites){
+        ((CircleSprite)s).setX(25.0, keyMin, width-50.0, keyMax);
+    }
+
+    //add more (non-circle) sprites here...
+
 }
 
 void draw(){
