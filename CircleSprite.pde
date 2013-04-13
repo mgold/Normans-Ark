@@ -2,6 +2,7 @@ final float MAXCIRCLESIZE = 100;
 
 class CircleSprite extends Sprite{
     ErrorModel model;
+    float velocityY = 0.0;
 
     CircleSprite(int errID){
         super();
@@ -22,6 +23,21 @@ class CircleSprite extends Sprite{
         float frac = (this.sortKey() - keyMin)/keyRange;
         float xRange = xMax - xMin;
         x = xRange*frac + xMin;
+    }
+    
+    float getEnergy()
+    {
+      return sq(velocityY) / 2;
+    }
+    
+    void setVelocityY(float vY)
+    {
+      velocityY = vY;
+    }
+    
+    float getVelocityY()
+    {
+      return velocityY;
     }
 
 
