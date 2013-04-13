@@ -8,43 +8,43 @@ class ColorModel {
   protected final color t2 = color(255, 255, 255);
   protected final color[] colors = { c1, c2, c3, c4, c5 };
   protected final color[] text = { t2, t2, t1, 51, 52 };
-  
+
   ColorModel() {
-    
+    ;
   }
-  
+
   color[] getColors() {
     return this.colors;
   }
-  
+
   color getColor1() {
     return c1; 
   }
-  
+
   color getColor2() {
     return c2;
   }
-  
+
   color getColor3() {
     return c3; 
   }
-  
+
   color getColor4() {
     return c4;
   }
-  
+
   color getColor5() {
     return c5;
   }
-  
-  color getColor( int id ) {
-    return colors[id%5]; 
+
+  color getColor(int colorID) {
+    return colors[colorID%colors.length];
   }
-  
-  color getTextColor( int id ) {
-    return text[id%5];
+
+  color getTextColor(int colorID) {
+    return text[colorID%colors.length];
   }
-  
+
   color getFaded( color c ) {
     return color( c, 50 ); 
   }

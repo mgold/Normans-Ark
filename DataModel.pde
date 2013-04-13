@@ -1,11 +1,12 @@
 class DataModel{
     private ArrayList<ErrorModel> errors;
-    private int nCategories;
+    private ArrayList<String> categories;
 
     DataModel(){
         errors = new ArrayList();
+        categories = new ArrayList();
         ParserModel parser = new ParserModel();
-        nCategories = parser.parse("data.csv", errors);
+        parser.parse("data.csv", categories, errors);
     }
 
     int getNumStudents(){
@@ -17,16 +18,19 @@ class DataModel{
     }
 
     int getNumCategories(){
-        return nCategories;
+        return categories.size();
     }
 
-    ErrorModel getError(int id){
-        if(0 <= id && id < this.getNumErrors()){
-            return errors.get(id);
+    ErrorModel getError(int errID){
+        if(0 <= errID && errID < this.getNumErrors()){
+            return errors.get(errID);
         }else{
             return null;
         }
     }
 
+    int colorIDForCategory(String cat){
+        return categories.indexOf(cat);
+    }
 
 }

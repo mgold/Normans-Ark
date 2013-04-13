@@ -3,11 +3,12 @@ final float MAXCIRCLESIZE = 100;
 class CircleSprite extends Sprite{
     ErrorModel model;
 
-    CircleSprite(int id){
-        super(id);
-        model = data.getError(id);
+    CircleSprite(int errID){
+        super();
+        model = data.getError(errID);
+        this.setColor(data.colorIDForCategory(model.getCategory()));
         int numErrors = data.getNumErrors();
-        x = (1+id)*width/(numErrors+1);
+        x = (1+errID)*width/(numErrors+1);
         y = height/2;
         h = w = MAXCIRCLESIZE*model.getNumFailers()/data.getNumStudents();
     }
