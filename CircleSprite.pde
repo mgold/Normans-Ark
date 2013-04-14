@@ -2,7 +2,7 @@ final float MAXCIRCLESIZE = 100;
 
 class CircleSprite extends Sprite{
     ErrorModel model;
-    float velocityY = 0.0;
+    float dy;
 
     CircleSprite(int errID){
         super();
@@ -10,8 +10,9 @@ class CircleSprite extends Sprite{
         this.setColor(data.colorIDForCategory(model.getCategory()));
         int numErrors = data.getNumErrors();
         x = (1+errID)*width/(numErrors+1);
-        y = height/2;
+        y = height*random(.2, .8);
         h = w = MAXCIRCLESIZE*model.getNumFailers()/data.getNumStudents();
+        dy = 0.0;
     }
 
     float sortKey(){
@@ -31,23 +32,25 @@ class CircleSprite extends Sprite{
             str(model.getGradeGivenError()));
     }
 
-    float getEnergy()
-    {
-      return sq(velocityY) / 2;
+
+    void repelFrom(CircleSprite other){
+      float distance = dist(x, y, other.getX(), other.getY());
+      float theta = atan2(other.getY()-y, other.getX()-x);
+      if (distance < this.getRadius()+ other.getRadius()+CIRCLESPACING){
+          if (selected == this){
+              println(distance+" "+this.getRadius()+" "+other.getRadius());
+          }
+          dy += YACCEL*sin(theta);
+      }
     }
 
-    void setVelocityY(float vY)
-    {
-      velocityY = vY;
-    }
-
-    float getVelocityY()
-    {
-      return velocityY;
+    float getRadius(){
+        return h;
     }
 
     void update(){
-        ;
+        y += dy;
+        y = bound(h, y, height-h);
     }
 
     void draw(){

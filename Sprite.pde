@@ -21,20 +21,15 @@ abstract class Sprite{
         fc = #AAAAAA; // grey fill
         sc = NO_STROKE_COLOR;
     }
-    
+
     float getX()
     {
       return x;
     }
-    
+
     float getY()
     {
       return y;
-    }
-    
-    void setY(float inY)
-    {
-      y = inY;
     }
 
     abstract void update();
