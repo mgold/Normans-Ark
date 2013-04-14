@@ -60,6 +60,7 @@ void applyForces() {
         for(CircleSprite b : circles) {
             if(a != b) {
                 a.repelFrom(b);
+                b.repelFrom(a);
             }
         }
     }
