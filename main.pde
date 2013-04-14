@@ -139,6 +139,7 @@ void mouseClicked(){
         selected = null;
       } else {
         selected = s;
+        println(s);
       }
     }
     s.focus(); // by default, everything should be in focus

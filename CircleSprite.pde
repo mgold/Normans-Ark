@@ -24,22 +24,27 @@ class CircleSprite extends Sprite{
         float xRange = xMax - xMin;
         x = xRange*frac + xMin;
     }
-    
+
+    String toString(){
+        return (model.getName()+" ("+model.getCategory()+
+            ") "+str(model.getNumFailers())+" failers get "+
+            str(model.getGradeGivenError()));
+    }
+
     float getEnergy()
     {
       return sq(velocityY) / 2;
     }
-    
+
     void setVelocityY(float vY)
     {
       velocityY = vY;
     }
-    
+
     float getVelocityY()
     {
       return velocityY;
     }
-
 
     void update(){
         ;
