@@ -38,19 +38,20 @@ class CircleSprite extends Sprite{
       float theta = atan2(other.getY()-y, other.getX()-x);
       if (distance < this.getRadius()+ other.getRadius()+CIRCLESPACING){
           if (selected == this){
-              println(distance+" "+this.getRadius()+" "+other.getRadius());
+              println(distance+" "+this.getRadius()+" "+other.getRadius()+" "+sin(theta));
           }
           dy += YACCEL*sin(theta);
       }
     }
 
     float getRadius(){
-        return h;
+        return h/2;
     }
 
     void update(){
         y += dy;
         y = bound(h, y, height-h);
+        dy = 0;
     }
 
     void draw(){

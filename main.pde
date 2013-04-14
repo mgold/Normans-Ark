@@ -6,7 +6,7 @@ DataModel data;
 Sprite selected = null;
 
 final float CIRCLESPACING = 5.0;
-final float YACCEL = .001;
+final float YACCEL = 2.0;
 
 void setup(){
     size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
