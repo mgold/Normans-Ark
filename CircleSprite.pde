@@ -35,12 +35,16 @@ class CircleSprite extends Sprite{
 
     void repelFrom(CircleSprite other){
       float distance = dist(x, y, other.getX(), other.getY());
-      float theta = atan2(other.getY()-y, other.getX()-x);
+//      float theta = atan2(other.getY()-y, other.getX()-x);
+      float theta = atan2(y - other.getY(), x - other.getX());
       if (distance < this.getRadius()+ other.getRadius()+CIRCLESPACING){
           if (selected == this){
               println(distance+" "+this.getRadius()+" "+other.getRadius()+" "+sin(theta));
           }
+          
           dy += YACCEL*sin(theta);
+          
+          
       }
     }
 
