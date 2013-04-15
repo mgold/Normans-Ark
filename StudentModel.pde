@@ -1,6 +1,6 @@
 class StudentModel{
-    String name;
-    int failCount [];
+    private String name;
+    private int failCount [];
 
     StudentModel(String s){
         String line [] = split(s, ',');
@@ -23,5 +23,8 @@ class StudentModel{
         }
     }
 
+    String getName(){
+        return name;
+    }
 
 }
