@@ -1,20 +1,18 @@
 class DataModel{
     private ArrayList<ErrorModel> errors;
     private ArrayList<String> categories;
-    private ArrayList<StudentModel> students;
-    private int numStudents;
+    private HashMap<String, StudentModel> students;
 
     DataModel(){
         errors = new ArrayList();
         categories = new ArrayList();
+        students = new HashMap();
         ParserModel parser = new ParserModel();
-        numStudents = parser.parse("data.csv", categories, errors);
-        students = new ArrayList(numStudents);
+        parser.parse("data.csv", categories, errors, students);
     }
 
     int getNumStudents(){
-        //return students.size();
-        return numStudents;
+        return students.size();
     }
 
     int getNumErrors(){
@@ -33,9 +31,8 @@ class DataModel{
         }
     }
 
-    //stub: return randomized StudentModel
-    StudentModel getStudent(){
-        return new StudentModel("Ralph Wiggins");
+    StudentModel getStudent(String name){
+        return students.get(name);
     }
 
     int colorIDForCategory(String cat){

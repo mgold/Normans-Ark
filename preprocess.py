@@ -18,20 +18,25 @@ class Error:
             student = students[failer]
             assert(student.hasError(self.name))
             total += student.getScore()
-        ret += str(round(total/len(self.failers),5))
-        for failer in self.failers:
-            ret += ","+failer
+        ret += str(round(total/len(self.failers),5))+","
+        ret += str(len(self.failers))
         return ret
 
 class Student:
     def __init__(self):
         self.results = Counter();
+        self.isPerfect = True
 
     def addResult(self, result):
         self.results[result] += 1
+        if result != "passed":
+            self.isPerfect = False
 
     def hasError(self, errName):
         return errName in self.results
+
+    def errorFreq(self, errName):
+        return self.results[errName]
 
     def getScore(self):
         return float(self.results["passed"]) / sum(self.results.values())
@@ -94,9 +99,9 @@ if __name__ == "__main__":
         stderr.write("Warning: No customized witness detection available for file.\n")
         errorFun = genericErrors
 
-    categories = set()
-    errors = {}
-    students = {}
+    categories = set() # string
+    errors = {} # string -> Error
+    students = {} # string -> Student
     with open(filename) as file:
         for line in file:
             words = split(split(line, ",")[1])
@@ -117,14 +122,20 @@ if __name__ == "__main__":
             else:
                 students[student].addResult("passed")
 
+
+    errorObs = errors.values()
     catstr = ""
     for cat in categories:
         catstr += cat+","
     print catstr[:-1]
-    for error in errors.values():
+    for error in errorObs:
         print error
-    print len(students)
-
-    #for name in students.keys():
-    #    print name
+    failers = [s for s in students.values() if not s.isPerfect]
+    print len(failers)
+    for name in students.keys():
+        if students[name] in failers:
+            outstr = name+","
+            for error in errorObs:
+                outstr += str(students[name].errorFreq(error.name))+","
+            print outstr[:-1]
 

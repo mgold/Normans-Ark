@@ -2,16 +2,20 @@ class StudentModel{
     String name;
     int failCount [];
 
-    StudentModel(String n){
-        name = n;
-        failCount = new int[data.getNumErrors()];
-        for (int i = 0; i < data.getNumErrors(); i++){
-            failCount[i] = floor(random(0, 4));
+    StudentModel(String s){
+        String line [] = split(s, ',');
+        name = line[0];
+        failCount = new int[line.length-1];
+        for (int i = 1; i < line.length; i++){
+            failCount[i-1] = int(line[i]);
         }
     }
 
     //the same errID as DataModel's getError(errID)
     int timesFailed(int errID){
+        if (failCount == null){
+            return 0;
+        }
         if(0 <= errID && errID < failCount.length){
             return failCount[errID];
         }else{
