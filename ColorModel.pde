@@ -13,30 +13,9 @@ class ColorModel {
     ;
   }
 
-  color[] getColors() {
-    return this.colors;
+  int getNumColors(){
+      return colors.length;
   }
-
-  color getColor1() {
-    return c1; 
-  }
-
-  color getColor2() {
-    return c2;
-  }
-
-  color getColor3() {
-    return c3; 
-  }
-
-  color getColor4() {
-    return c4;
-  }
-
-  color getColor5() {
-    return c5;
-  }
-
   color getColor(int colorID) {
     return colors[colorID%colors.length];
   }
@@ -45,7 +24,7 @@ class ColorModel {
     return text[colorID%colors.length];
   }
 
-  color getFaded( color c ) {
+  color getFaded(color c) {
     return color( c, 50 ); 
   }
 }
