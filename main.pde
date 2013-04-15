@@ -7,6 +7,7 @@ Sprite selected = null;
 
 final float CIRCLESPACING = 5.0;
 final float YACCEL = 2.0;
+final int MAXFORCEITERS = 400;
 
 void setup(){
     size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -36,6 +37,8 @@ void setup(){
         c.setX(25.0, keyMin, width-50.0, keyMax);
     }
 
+    applyForces();
+
     //add more (non-circle) sprites here...
 
 }
@@ -43,8 +46,6 @@ void setup(){
 void draw(){
     background(#FFFFFF);
     fill(#000000);
-
-    applyForces();
 
     for (Sprite s : circles){
         s.update();
@@ -56,13 +57,18 @@ void draw(){
 }
 
 void applyForces() {
-    for(CircleSprite a : circles) {
-        for(CircleSprite b : circles) {
-            if(a != b) {
-                a.repelFrom(b);
-                b.repelFrom(a);
+    boolean moved = true;
+    int i = 0;
+    while(moved && i < MAXFORCEITERS){
+        moved = false;
+        for(CircleSprite a : circles) {
+            for(CircleSprite b : circles) {
+                if(a != b) {
+                    moved |= a.repelFrom(b);
+                }
             }
         }
+        i++;
     }
 }
 

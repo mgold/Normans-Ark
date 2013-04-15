@@ -10,7 +10,7 @@ class CircleSprite extends Sprite{
         this.setColor(data.colorIDForCategory(model.getCategory()));
         int numErrors = data.getNumErrors();
         x = (1+errID)*width/(numErrors+1);
-        y = height*random(.2, .7);
+        y = height*random(.3, .7);
         h = w = MAXCIRCLESIZE*model.getNumFailers()/data.getNumStudents();
         dy = 0.0;
     }
@@ -33,19 +33,17 @@ class CircleSprite extends Sprite{
     }
 
 
-    void repelFrom(CircleSprite other){
+    boolean repelFrom(CircleSprite other){
       float distance = dist(x, y, other.getX(), other.getY());
-//      float theta = atan2(other.getY()-y, other.getX()-x);
       float theta = atan2(y - other.getY(), x - other.getX());
       if (distance < this.getRadius()+ other.getRadius()+CIRCLESPACING){
           if (selected == this){
               println(distance+" "+this.getRadius()+" "+other.getRadius()+" "+sin(theta));
           }
-          
           dy += YACCEL*sin(theta);
-          
-          
+          return true;
       }
+      return false;
     }
 
     float getRadius(){
