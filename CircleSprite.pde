@@ -60,8 +60,18 @@ class CircleSprite extends Sprite{
         super.draw();
         fill(fc);
         ellipse(x,y,w,h);
-        fill(tc);
-        text(model.getName(), x, y);
+        if ( w > 50 ) { // TODO replace this with better test
+          textAlign( CENTER, CENTER );
+          fill(tc);
+          text( model.getName(), x-.5*w, y-.5*h, w, h);
+        } else if ( displayMouseover ) {
+          textAlign( LEFT, CENTER );
+          // first the drop shadow
+          fill(#ffffff);
+          text( model.getName(), mouseX-1, mouseY-11 );
+          fill(#000000);
+          text( model.getName(), mouseX, mouseY-10 );
+        }
     }
 
     boolean intersects(int _x, int _y) {

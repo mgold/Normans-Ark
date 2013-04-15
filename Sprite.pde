@@ -4,7 +4,8 @@ abstract class Sprite{
     final int STROKE_COLOR = 100;
     float x, y;
     float h, w;
-    color fc, sc, dc, hc, tc; // fill; stroke; default; highlight; text
+    color fc, sc, dc, hc, tc; // fill; stroke; default; highlight; text; dropshadow
+    boolean displayMouseover = false;
     ColorModel colorModel = new ColorModel();
 
     Sprite(){
@@ -37,12 +38,12 @@ abstract class Sprite{
     void draw(){
         if (fc == -1){
             noFill();
-        }else{
+        } else{
             fill(fc);
         }
         if (sc == -1){
             noStroke();
-        }else{
+        } else{
             stroke(sc);
         }
     }
@@ -62,14 +63,16 @@ abstract class Sprite{
 
     void setHighlight() {
       sc = STROKE_COLOR;
+      displayMouseover = true;
     }
 
     void unsetHighlight() {
       sc = NO_STROKE_COLOR;
+      displayMouseover = false;
     }
 
     void fade() {
-       fc = hc; // set the active color to the highlight value
+      fc = hc; // set the active color to the highlight value
     }
 
     void focus() {
