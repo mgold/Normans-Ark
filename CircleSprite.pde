@@ -1,4 +1,4 @@
-final float MAXCIRCLESIZE = 0.1 * DEFAULT_HEIGHT;
+final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
 
 class CircleSprite extends Sprite{
     ErrorModel model;

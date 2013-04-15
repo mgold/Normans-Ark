@@ -123,4 +123,8 @@ if __name__ == "__main__":
     print catstr[:-1]
     for error in errors.values():
         print error
+    print len(students)
+
+    #for name in students.keys():
+    #    print name
 
