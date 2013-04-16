@@ -6,6 +6,7 @@ abstract class Sprite{
     float h, w;
     color fc, sc, dc, hc, tc; // fill; stroke; default; highlight; text; dropshadow
     boolean displayMouseover = false;
+    boolean isSelected = false;
     ColorModel colorModel = new ColorModel();
 
     Sprite(){
@@ -73,6 +74,7 @@ abstract class Sprite{
 
     void fade() {
       fc = hc; // set the active color to the highlight value
+      this.isSelected = false;
     }
 
     void focus() {
@@ -81,6 +83,22 @@ abstract class Sprite{
 
     boolean isFocused() {
       return fc == dc; 
+    }
+    
+    boolean isHighlighted() {
+      return sc == STROKE_COLOR;
+    }
+    
+    boolean isSelected() {
+      return isSelected; 
+    }
+    
+    void deselect() {
+      this.isSelected = false; 
+    }
+    
+    void select() {
+      this.isSelected = true; 
     }
 
 }

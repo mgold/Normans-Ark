@@ -1,6 +1,8 @@
 static final int DEFAULT_HEIGHT = 600;
 static final int DEFAULT_WIDTH = 800;
+static final float DEFAULT_TEXT_SIZE = 12;
 static final float CANVAS_DIV = .6;
+static final float MARGIN = .025;
 
 ArrayList<CircleSprite> circles;
 DataModel data;
@@ -13,7 +15,7 @@ final int MAXFORCEITERS = 800;
 void setup(){
     size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     textAlign(CENTER, CENTER);
-    textSize(12);
+    textSize(DEFAULT_TEXT_SIZE);
 
     data = new DataModel();
 
@@ -89,13 +91,15 @@ void mouseClicked(){
       }
     }
     s.focus(); // by default, everything should be in focus
+    s.deselect(); // and not selected
   }
 
   // if user clicked on a sprite, fade the others
   if ( selected != null ) {
+    selected.select();
     for ( Sprite s : circles ) {
       if ( !s.equals( selected ) ) {
-        s.fade(); 
+        s.fade();
       }
     }
   }

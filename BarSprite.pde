@@ -1,19 +1,30 @@
-class BarSprite extends Sprite {
-  private static final float DEFAULT_HEIGHT = 40;
-  private static final float DEFAULT_WIDTH = 200;
+static final float DEFAULT_BAR_HEIGHT = 25;
+private static final float DEFAULT_BAR_WIDTH = 150;
+static final float DEFAULT_TEXT_WIDTH = 75;
 
-    BarSprite(){
+class BarSprite extends Sprite {
+  private StudentModel student;
+
+    BarSprite( StudentModel studentModel, float _x, float _y, float _w, float _h ){
         super();
-        x = width/2; // TODO change this
-        y = height/2; // TODO change this
-        h = DEFAULT_HEIGHT*(height/main.DEFAULT_HEIGHT);
-        w = DEFAULT_WIDTH*(width/main.DEFAULT_WIDTH);
+        x = _x;
+        y = _y;
+        w = _w;
+        h = _h;
+        this.student = studentModel;
     }
     
     void draw(){
         super.draw();
+        
+        fill(tc);
+        textAlign( LEFT, CENTER );
+        text( "Little Timmy", x, y+(.5*h) );
+        //text( student.getName(), x, y );
+
         fill(fc);
-        rect(x,y,w,h);
+        float _x = width-(MARGIN*DEFAULT_WIDTH)-w;
+        rect(_x,y,w,h);
     }
 
     void update(){
@@ -27,6 +38,6 @@ class BarSprite extends Sprite {
        } else {
          return false;
        } 
-    }  
+    }
     
 }

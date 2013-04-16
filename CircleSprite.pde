@@ -2,11 +2,13 @@ final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
 
 class CircleSprite extends Sprite{
     ErrorModel model;
+    DetailSprite detail;
     float dx;
 
     CircleSprite(int errID){
         super();
         model = data.getError(errID);
+        detail = new DetailSprite( model );
         this.setColor(data.colorIDForCategory(model.getCategory()));
         int numErrors = data.getNumErrors();
         x = width*random(.3, .7);
@@ -69,6 +71,10 @@ class CircleSprite extends Sprite{
           fill(#000000);
           text( model.getName(), mouseX, mouseY-10 );
         }
+        
+        if ( this.isSelected() ) {
+          detail.draw();
+        }
     }
 
     boolean intersects(int _x, int _y) {
@@ -80,5 +86,4 @@ class CircleSprite extends Sprite{
         return true;
       }
     }
-
 }
