@@ -1,13 +1,14 @@
 static final int DEFAULT_HEIGHT = 600;
 static final int DEFAULT_WIDTH = 800;
+static final float CANVAS_DIV = .7;
 
 ArrayList<CircleSprite> circles;
 DataModel data;
 Sprite selected = null;
 
 final float CIRCLESPACING = 5.0;
-final float YACCEL = 2.0;
-final int MAXFORCEITERS = 400;
+final float XACCEL = 1.0;
+final int MAXFORCEITERS = 800;
 
 void setup(){
     size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -34,7 +35,7 @@ void setup(){
     }
 
     for (CircleSprite c : circles){
-        c.setX(25.0, keyMin, width-50.0, keyMax);
+        c.setY(25.0, keyMin, height-50.0, keyMax);
     }
 
     applyForces();
@@ -69,6 +70,7 @@ void applyForces() {
             }
         }
         i++;
+        println(i);
     }
 }
 

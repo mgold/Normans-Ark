@@ -2,28 +2,28 @@ final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
 
 class CircleSprite extends Sprite{
     ErrorModel model;
-    float dy;
+    float dx;
 
     CircleSprite(int errID){
         super();
         model = data.getError(errID);
         this.setColor(data.colorIDForCategory(model.getCategory()));
         int numErrors = data.getNumErrors();
-        x = (1+errID)*width/(numErrors+1);
-        y = height*random(.3, .7);
+        x = width*random(.3, .7);
+        y = (1+errID)*height/(numErrors+1);
         h = w = MAXCIRCLESIZE*model.getNumFailers()/data.getNumStudents();
-        dy = 0.0;
+        dx = 0.0;
     }
 
     float sortKey(){
         return model.getGradeGivenError();
     }
 
-    void setX(float xMin, float keyMin, float xMax, float keyMax){
+    void setY(float yMin, float keyMin, float yMax, float keyMax){
         float keyRange = keyMax - keyMin;
         float frac = (this.sortKey() - keyMin)/keyRange;
-        float xRange = xMax - xMin;
-        x = xRange*frac + xMin;
+        float yRange = yMax - yMin;
+        y = yRange*(1-frac) + yMin;
     }
 
     String toString(){
@@ -32,15 +32,12 @@ class CircleSprite extends Sprite{
             str(model.getGradeGivenError()));
     }
 
-
     boolean repelFrom(CircleSprite other){
       float distance = dist(x, y, other.getX(), other.getY());
       float theta = atan2(y - other.getY(), x - other.getX());
       if (distance < this.getRadius()+ other.getRadius()+CIRCLESPACING){
-          if (selected == this){
-              println(distance+" "+this.getRadius()+" "+other.getRadius()+" "+sin(theta));
-          }
-          dy += YACCEL*sin(theta);
+          println("repelling "+model.getName()+" from "+other.model.getName()+" at "+distance);
+          dx += XACCEL*cos(theta);
           return true;
       }
       return false;
@@ -51,9 +48,9 @@ class CircleSprite extends Sprite{
     }
 
     void update(){
-        y += dy;
-        y = bound(h, y, height-h);
-        dy = 0;
+        x += dx;
+        x = bound(h, x, height-h);
+        dx = 0;
     }
 
     void draw(){
@@ -63,9 +60,9 @@ class CircleSprite extends Sprite{
         if ( w > 50 ) { // TODO replace this with better test
           textAlign( CENTER, CENTER );
           fill(tc);
-          text( model.getName(), x-.5*w, y-.5*h, w, h);
-        } else if ( displayMouseover ) {
-          textAlign( LEFT, CENTER );
+          text(model.getName(), x-.5*w, y-.5*h, w, h);
+        } else if (displayMouseover) {
+          textAlign(LEFT, CENTER);
           // first the drop shadow
           fill(#ffffff);
           text( model.getName(), mouseX-1, mouseY-11 );
