@@ -49,7 +49,7 @@ class CircleSprite extends Sprite{
 
     void update(){
         x += dx;
-        x = bound(h, x, height-h);
+        x = bound(w, x, width*CANVAS_DIV);
         dx = 0;
     }
 

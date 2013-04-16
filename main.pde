@@ -1,6 +1,6 @@
 static final int DEFAULT_HEIGHT = 600;
 static final int DEFAULT_WIDTH = 800;
-static final float CANVAS_DIV = .7;
+static final float CANVAS_DIV = .6;
 
 ArrayList<CircleSprite> circles;
 DataModel data;
