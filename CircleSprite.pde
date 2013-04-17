@@ -1,4 +1,5 @@
 final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
+final float CIRCLESPACING = 5.0;
 
 class CircleSprite extends Sprite{
     ErrorModel model;
@@ -11,8 +12,8 @@ class CircleSprite extends Sprite{
         detail = new DetailSprite( model );
         this.setColor(data.colorIDForCategory(model.getCategory()));
         int numErrors = data.getNumErrors();
-        x = width*random(.3, .7);
-        y = (1+errID)*height/(numErrors+1);
+        x = 0;
+        y = 0;
         h = w = MAXCIRCLESIZE*model.getNumFailers()/data.getNumStudents();
         dx = 0.0;
     }
@@ -27,6 +28,34 @@ class CircleSprite extends Sprite{
         float yRange = yMax - yMin;
         y = yRange*(1-frac) + yMin;
     }
+
+    //call setY() first
+    void setX(ArrayList<CircleSprite> otherCircles){
+        float x0 = x = CANVAS_DIV*width/2.;
+        float offset = 1;
+        while (intersectsAny(otherCircles, CIRCLESPACING)){
+            x = x0 + offset;
+            if (offset > 0){
+                offset += 1;
+            }else{
+                offset -= 1;
+            }
+            offset *= -1.;
+        }
+        x = bound(w, x, CANVAS_DIV*width-w);
+    }
+
+    boolean intersectsAny(ArrayList<CircleSprite> otherCircles, float spacing){
+        for (CircleSprite other : otherCircles){
+            if (this == other){
+                return false;
+            }else if (intersects(other, spacing)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     String toString(){
         return (model.getName()+" ("+model.getCategory()+
@@ -59,12 +88,12 @@ class CircleSprite extends Sprite{
         super.draw();
         fill(fc);
         ellipse(x,y,w,h);
-        
+
         if ( this.isSelected() ) {
           detail.draw();
         }
     }
-    
+
     void drawText()
     {
         if ( w > 50 ) { // TODO replace this with better test
@@ -81,13 +110,17 @@ class CircleSprite extends Sprite{
         }
     }
 
-    boolean intersects(int _x, int _y) {
-      float dist = sqrt( (_x - x) * (_x - x) + (_y - y) * (_y - y) );
+    boolean intersects(CircleSprite other){
+        return intersects(other, 0);
+    }
 
-      if (dist > w/2) {
-        return false;
-      } else {
-        return true;
-      }
+    boolean intersects(CircleSprite other, float spacing){
+        float d = dist(x, y, other.getX(), other.getY());
+        return d <= getRadius() + other.getRadius() + spacing;
+    }
+
+    boolean intersects(int _x, int _y) {
+      float d = dist(x, y, _x, _y);
+      return d <= getRadius();
     }
 }

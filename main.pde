@@ -8,7 +8,6 @@ ArrayList<CircleSprite> circles;
 DataModel data;
 Sprite selected = null;
 
-final float CIRCLESPACING = 5.0;
 final float XACCEL = 1.0;
 final int MAXFORCEITERS = 800;
 
@@ -24,23 +23,39 @@ void setup(){
         circles.add(new CircleSprite(i));
     }
 
-    float keyMin = 100;
-    float keyMax = -1;
-    for (CircleSprite s : circles){
-        float sortKey = s.sortKey();
-        if (sortKey < keyMin){
-            keyMin = sortKey;
-        }
-        if (sortKey > keyMax){
-            keyMax = sortKey;
+    //bubble sort by grade given error
+    for (int i=0; i<circles.size(); i++) {
+        for (int j=0; j<circles.size() -1; j++) {
+            if (circles.get(j).sortKey() > circles.get(j+1).sortKey()){
+                CircleSprite removed = circles.remove(j);
+                circles.add(j+1, removed);
+            }
         }
     }
 
+    //assign Y values
+    float keyMin = circles.get(0).sortKey();
+    float keyMax = circles.get(circles.size() -1).sortKey();
     for (CircleSprite c : circles){
         c.setY(25.0, keyMin, height-50.0, keyMax);
     }
 
-    applyForces();
+    //bubble sort shallow copy by descending circle radius
+    ArrayList<CircleSprite> circlesBySize = new ArrayList(circles);
+    for (int i=0; i<circlesBySize.size(); i++) {
+        for (int j=0; j<circlesBySize.size() -1; j++) {
+            if (circlesBySize.get(j).getRadius() < circlesBySize.get(j+1).getRadius()){
+                CircleSprite removed = circlesBySize.remove(j);
+                circlesBySize.add(j+1, removed);
+            }
+        }
+    }
+
+    //assign X values
+    for (CircleSprite c : circlesBySize){
+        c.setX(circlesBySize);
+    }
+
 
     //add more (non-circle) sprites here...
 
