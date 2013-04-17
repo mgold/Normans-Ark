@@ -5,6 +5,7 @@ class CircleSprite extends Sprite{
     ErrorModel model;
     DetailSprite detail;
     float dx;
+    boolean textDrawn = false;
 
     CircleSprite(int errID){
         super();
@@ -83,18 +84,38 @@ class CircleSprite extends Sprite{
 
     void drawText()
     {
-        if ( w > 50 ) { // TODO replace this with better test
+        // Only draw the text in the circle if the text width
+        // will fit in the circle.
+        if ( textWidth(model.getName()) < (w * 2) ) {
           textAlign( CENTER, CENTER );
           fill(tc);
           text(model.getName(), x-.5*w, y-.5*h, w, h);
-        } else if (displayMouseover) {
+          textDrawn = true;
+        }
+        else
+        {
+          textDrawn = false;
+        }
+    }
+
+    void drawHoverText()
+    {
+      if(textDrawn == false)
+      {
+        if (displayMouseover) {
           textAlign(LEFT, CENTER);
           // first the drop shadow
           fill(#ffffff);
           text( model.getName(), mouseX-1, mouseY-11 );
           fill(#000000);
           text( model.getName(), mouseX, mouseY-10 );
+          textDrawn = true;
         }
+        else
+        {
+          textDrawn = false;
+        }
+      }
     }
 
     boolean intersects(CircleSprite other){

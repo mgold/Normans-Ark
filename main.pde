@@ -70,13 +70,13 @@ void draw(){
         s.draw();
     }
 
-    // Drawing the text for circles separately, otherwise
+    // Drawing the hover text for circles separately, otherwise
     // if circles are too close to each other the text of one
     // will disappear behind another circle if that other circle
     // was drawn after the one being hovered over.
     for(Sprite s : circles)
     {
-        s.drawText();
+        s.drawHoverText();
     }
 }
 

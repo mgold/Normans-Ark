@@ -52,6 +52,10 @@ abstract class Sprite{
     void drawText()
     {
     }
+    
+    void drawHoverText()
+    {
+    }
 
     abstract boolean intersects(int _x, int _y);
 
