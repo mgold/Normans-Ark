@@ -8,9 +8,6 @@ ArrayList<CircleSprite> circles;
 DataModel data;
 Sprite selected = null;
 
-final float XACCEL = 1.0;
-final int MAXFORCEITERS = 800;
-
 void setup(){
     size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     textAlign(CENTER, CENTER);
@@ -72,7 +69,7 @@ void draw(){
     for (Sprite s : circles){
         s.draw();
     }
-    
+
     // Drawing the text for circles separately, otherwise
     // if circles are too close to each other the text of one
     // will disappear behind another circle if that other circle
@@ -80,23 +77,6 @@ void draw(){
     for(Sprite s : circles)
     {
         s.drawText();
-    }
-}
-
-void applyForces() {
-    boolean moved = true;
-    int i = 0;
-    while(i < MAXFORCEITERS){
-        moved = false;
-        for(CircleSprite a : circles) {
-            for(CircleSprite b : circles) {
-                if(a != b) {
-                    moved |= a.repelFrom(b);
-                }
-            }
-        }
-        i++;
-        println(i);
     }
 }
 

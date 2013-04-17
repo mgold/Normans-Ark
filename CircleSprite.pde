@@ -63,25 +63,12 @@ class CircleSprite extends Sprite{
             str(model.getGradeGivenError()));
     }
 
-    boolean repelFrom(CircleSprite other){
-      float distance = dist(x, y, other.getX(), other.getY());
-      float theta = atan2(x - other.getX(), y - other.getY());
-      if (distance < this.getRadius()+ other.getRadius()+CIRCLESPACING){
-          println("repelling "+model.getName()+" from "+other.model.getName()+" at "+distance);
-          dx += XACCEL*cos(theta);
-          return true;
-      }
-      return false;
-    }
-
     float getRadius(){
         return h/2;
     }
 
     void update(){
-        x += dx;
-        x = bound(w, x, width*CANVAS_DIV);
-        dx = 0;
+        ;
     }
 
     void draw(){
