@@ -137,5 +137,6 @@ if __name__ == "__main__":
             outstr = name+","
             for error in errorObs:
                 outstr += str(students[name].errorFreq(error.name))+","
-            print outstr[:-1]
+            outstr += str(students[name].errorFreq("passed"))
+            print outstr
 
