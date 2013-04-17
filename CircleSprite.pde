@@ -59,6 +59,10 @@ class CircleSprite extends Sprite{
         super.draw();
         fill(fc);
         ellipse(x,y,w,h);
+    }
+    
+    void drawText()
+    {
         if ( w > 50 ) { // TODO replace this with better test
           textAlign( CENTER, CENTER );
           fill(tc);

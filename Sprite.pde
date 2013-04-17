@@ -48,6 +48,10 @@ abstract class Sprite{
             stroke(sc);
         }
     }
+    
+    void drawText()
+    {
+    }
 
     abstract boolean intersects(int _x, int _y);
 
