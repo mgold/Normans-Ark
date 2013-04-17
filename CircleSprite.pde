@@ -36,7 +36,7 @@ class CircleSprite extends Sprite{
 
     boolean repelFrom(CircleSprite other){
       float distance = dist(x, y, other.getX(), other.getY());
-      float theta = atan2(y - other.getY(), x - other.getX());
+      float theta = atan2(x - other.getX(), y - other.getY());
       if (distance < this.getRadius()+ other.getRadius()+CIRCLESPACING){
           println("repelling "+model.getName()+" from "+other.model.getName()+" at "+distance);
           dx += XACCEL*cos(theta);
@@ -59,6 +59,10 @@ class CircleSprite extends Sprite{
         super.draw();
         fill(fc);
         ellipse(x,y,w,h);
+        
+        if ( this.isSelected() ) {
+          detail.draw();
+        }
     }
     
     void drawText()
@@ -74,10 +78,6 @@ class CircleSprite extends Sprite{
           text( model.getName(), mouseX-1, mouseY-11 );
           fill(#000000);
           text( model.getName(), mouseX, mouseY-10 );
-        }
-        
-        if ( this.isSelected() ) {
-          detail.draw();
         }
     }
 

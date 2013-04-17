@@ -71,7 +71,7 @@ void draw(){
 void applyForces() {
     boolean moved = true;
     int i = 0;
-    while(moved && i < MAXFORCEITERS){
+    while(i < MAXFORCEITERS){
         moved = false;
         for(CircleSprite a : circles) {
             for(CircleSprite b : circles) {
