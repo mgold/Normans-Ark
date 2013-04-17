@@ -68,6 +68,7 @@ void draw(){
 
     for (Sprite s : circles){
         s.draw();
+        s.drawText();
     }
 
     // Drawing the hover text for circles separately, otherwise
