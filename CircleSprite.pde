@@ -71,14 +71,19 @@ class CircleSprite extends Sprite{
           textAlign( CENTER, CENTER );
           fill(tc);
           text(model.getName(), x-.5*w, y-.5*h, w, h);
-        } else if (displayMouseover) {
-          textAlign(LEFT, CENTER);
-          // first the drop shadow
-          fill(#ffffff);
-          text( model.getName(), mouseX-1, mouseY-11 );
-          fill(#000000);
-          text( model.getName(), mouseX, mouseY-10 );
         }
+    }
+    
+    void drawHoverText()
+    {
+      if (displayMouseover) {
+        textAlign(LEFT, CENTER);
+        // first the drop shadow
+        fill(#ffffff);
+        text( model.getName(), mouseX-1, mouseY-11 );
+        fill(#000000);
+        text( model.getName(), mouseX, mouseY-10 );
+      }
     }
 
     boolean intersects(int _x, int _y) {
