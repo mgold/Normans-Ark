@@ -16,7 +16,7 @@ class DetailSprite extends Sprite {
         populateStudents();
         createBars();
     }
-    
+
     private void populateStudents() {
         for ( int i = 0; i < data.getStudents().length; i++ ) {
           StudentModel s = data.getStudents()[i];
@@ -26,7 +26,7 @@ class DetailSprite extends Sprite {
           }
         }
     }
-    
+
     private void createBars() { // TODO: using dummy student data
       for ( int i = 0; i < students.size(); i++ ) {
         float _x = x+(MARGIN*DEFAULT_WIDTH);
@@ -37,39 +37,43 @@ class DetailSprite extends Sprite {
         bars.add( new BarSprite( students.get( i ), _x, _y, _w, _h ) );
       } 
     }
-  
+
     void update(){
         x = bound(w, x, width-( width*( 1-CANVAS_DIV ) ) ); // TODO change this
     }
-    
+
     void draw() {
         super.draw();
-      
+
         fill( colorModel.getDetailBkgdColor() );
         rect( x, y, w, h ); 
-        
+
         fill( tc );
         textSize( DEFAULT_TEXT_SIZE*1.5 );
         textAlign( RIGHT, TOP );
         float _x = x+(MARGIN*DEFAULT_WIDTH);
         float _y = y+(2*MARGIN*DEFAULT_HEIGHT);
         text( errorModel.getName(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
-        
+        _y = y+(8*MARGIN*DEFAULT_HEIGHT);
+        textSize( DEFAULT_TEXT_SIZE*1.2 );
+        fill(colorModel.getColor(data.colorIDForCategory(errorModel.getCategory())));
+        text( errorModel.getCategory(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
+
         // set it back to the defaults
         textSize( DEFAULT_TEXT_SIZE );
         textAlign(CENTER, CENTER);
-        
+
         for ( BarSprite bar : bars ) {
           bar.draw();
         }
     }
-    
+
     boolean intersects( int _x, int _y ) {
       if ( _x >= x && _x <= x + w &&
            _y >= y && _y <= y + h ) {
          return true;
        } else {
          return false;
-       } 
+       }
     }
 }
