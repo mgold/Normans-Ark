@@ -30,13 +30,32 @@ class DataModel{
             return null;
         }
     }
+    
+    int getErrorId( ErrorModel error ) {
+      for ( int i = 0; i < errors.size(); i++ ) {
+        ErrorModel e = errors.get( i );
+        if ( e.equals( error ) ) {
+          return i;
+        }
+      }
+      
+      return -1;
+    }
 
     StudentModel getStudent(String name){
         return students.get(name);
     }
+    
+    StudentModel[] getStudents() {
+        return students.values().toArray( new StudentModel[0] ); 
+    }
 
     int colorIDForCategory(String cat){
         return categories.indexOf(cat);
+    }
+    
+    String getCategory( int catId ) {
+        return categories.get( catId ); 
     }
 
 }

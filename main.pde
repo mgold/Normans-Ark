@@ -2,7 +2,7 @@ static final int DEFAULT_HEIGHT = 600;
 static final int DEFAULT_WIDTH = 800;
 static final float DEFAULT_TEXT_SIZE = 12;
 static final float CANVAS_DIV = .6;
-static final float MARGIN = .025;
+static final float MARGIN = .0125;
 
 ArrayList<CircleSprite> circles;
 DataModel data;
