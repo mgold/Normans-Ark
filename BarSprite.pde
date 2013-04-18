@@ -143,17 +143,22 @@ class BarSprite extends Sprite {
         super.draw(); 
 
         fill( fc );
-        rect( x, y, w, h );
         
         if ( highlighted ) {
-          stroke( colorModel.getActiveErrorColor() );
-          strokeWeight( 1 );
-          line( x, y+h+2, x, y+h+6 );
-          line( x, y+h+4, x+w, y+h+4 );
-          line( x+w, y+h+2, x+w, y+h+6 );
+//          stroke( colorModel.getActiveErrorColor() );
+          
+          rect(x, y - 4, w, h + 8);
+//          strokeWeight( 1 );
+//          line( x, y+h+2, x, y+h+6 );
+//          line( x, y+h+4, x+w, y+h+4 );
+//          line( x+w, y+h+2, x+w, y+h+6 );
           //strokeWeight( 1.5 );
           //noFill();
           //rect( x, y-2, w, h+3 );
+        }
+        else
+        {
+          rect( x, y, w, h );
         }
       }
       
