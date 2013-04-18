@@ -28,14 +28,33 @@ class DetailSprite extends Sprite {
     }
 
     private void createBars() { // TODO: using dummy student data
+      sortStudents(); 
+
       for ( int i = 0; i < students.size(); i++ ) {
         float _x = x+(MARGIN*DEFAULT_WIDTH);
         float _y = y+(2*MARGIN*DEFAULT_HEIGHT)+((i+1)*DEFAULT_BAR_SEP);
         float _w = w - (MARGIN*DEFAULT_WIDTH);
         float _h = DEFAULT_BAR_HEIGHT*(height/main.DEFAULT_HEIGHT);
         //float _w = DEFAULT_BAR_WIDTH*(width/main.DEFAULT_WIDTH);
-        bars.add( new BarSprite( students.get( i ), _x, _y, _w, _h ) );
-      } 
+        bars.add( new BarSprite( students.get( i ), errorModel, _x, _y, _w, _h ) );
+      }
+    }
+    
+    private void sortStudents() {
+      int errId = data.getErrorId( errorModel );
+
+      for (int i=0; i < students.size(); i++) {
+        for (int j=i+1; j < students.size(); j++) {
+          StudentModel current = students.get( i );
+          StudentModel test = students.get( j );
+
+          if ( current.timesFailed( errId ) < test.timesFailed( errId ) ) {
+            StudentModel temp = current; // swap
+            students.set(i, test);
+            students.set(j, temp);
+          }
+        }
+      }
     }
 
     void update(){

@@ -1,5 +1,6 @@
 class ColorModel {
   protected final color PASSING_COLOR = color( 0, 90, 0, 90 );
+  protected final color ACTIVE_ERROR_COLOR = color( 225, 0, 0 );
   protected final color DETAIL_BKGD_COLOR = color(212, 216, 223, 100);
   protected final color c4 = color(1, 35, 38);
   protected final color c2 = color(23, 69, 92);
@@ -33,6 +34,10 @@ class ColorModel {
   
   color getPassingColor() {
     return PASSING_COLOR; 
+  }
+  
+  color getActiveErrorColor() {
+    return ACTIVE_ERROR_COLOR; 
   }
   
   color getDetailBkgdColor() {
