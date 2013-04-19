@@ -3,7 +3,7 @@ static final int DEFAULT_WIDTH = 800;
 static final float DEFAULT_TEXT_SIZE = 12;
 static final float CANVAS_DIV = .6;
 static final float MARGIN = .0125;
-static final float MAXCIRCLESIZE = 0.2 * DEFAULT_HEIGHT;
+static final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
 static final float CIRCLESPACING = 5.0;
 
 ArrayList<CircleSprite> circles;
@@ -32,13 +32,6 @@ void setup(){
         }
     }
 
-    //assign Y values
-    float keyMin = circles.get(0).sortKey();
-    float keyMax = circles.get(circles.size() -1).sortKey();
-    for (CircleSprite c : circles){
-        c.setY(MAXCIRCLESIZE, keyMin, height-MAXCIRCLESIZE, keyMax);
-    }
-
     //bubble sort shallow copy by descending circle radius
     ArrayList<CircleSprite> circlesBySize = new ArrayList(circles);
     for (int i=0; i<circlesBySize.size(); i++) {
@@ -48,7 +41,14 @@ void setup(){
                 circlesBySize.add(j+1, removed);
             }
         }
+    }
 
+    //assign Y values
+    float rMax   = circlesBySize.get(0).getRadius()+CIRCLESPACING;
+    float keyMin = circles.get(0).sortKey();
+    float keyMax = circles.get(circles.size() -1).sortKey();
+    for (CircleSprite c : circles){
+        c.setY(rMax, keyMin, height-rMax, keyMax);
     }
 
     //assign X values

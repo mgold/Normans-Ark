@@ -15,6 +15,7 @@ def genericErrors(witness):
         return None
 
 def unitErrors(witness):
+    witness = lower(witness)
     e = genericErrors(witness)
     if e:
         return e
@@ -44,10 +45,24 @@ def unitErrors(witness):
 
 
 def umlErrors(witness):
-    words = witness.split()
-    test = words[1]+"-"+words[3][:-1]
-    cat = words[5]
-    return Error(test, cat)
+    quoteDelim = split(witness, '"');
+    if "uncaught exception" in witness:
+        return Error(witness[rindex(witness, ' ')+1:-3], "Exception")
+    elif "CPU time" in witness:
+        return Error("CPU Time", "Runtime")
+    elif "wrote the error message" in witness:
+        return Error("Wrote Error", "Runtime")
+    elif "signalled a bug in type inference" in witness:
+        return Error("Signalled Bug", "Type Inference")
+    elif "typed-incorrectly" in witness:
+        return Error("Typed Incorrectly", "Type Inference")
+    elif "did-not-type" in witness:
+        return Error("Did Not Type", "Type Inference")
+    elif "typed-untypeable" in witness:
+        return Error("Typed Untypeable", "Type Inference")
+    else:
+        stderr.write("Warning: Unrecognized witness \""+witness+"\"\n")
+        return None
 
 ############################################################
 # There should be no need to make changes below this line. #
@@ -99,7 +114,7 @@ class Student:
 
 if __name__ == "__main__":
     from sys import argv;
-    from string import lower, split, join;
+    from string import lower, split, join, rindex;
     if len(argv) != 2:
         stderr.write("Error: Must supply exactly 1 data file.\n")
         exit();
@@ -124,7 +139,7 @@ if __name__ == "__main__":
             if student not in students:
                 students[student] = Student()
             if result != "passed":
-                error = errorFun(lower(witness))
+                error = errorFun(witness)
                 if error:
                     if error.name not in errors:
                         errors[error.name] = error
