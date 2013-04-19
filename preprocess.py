@@ -43,6 +43,12 @@ def unitErrors(witness):
         return None
 
 
+def umlErrors(witness):
+    words = witness.split()
+    test = words[1]+"-"+words[3][:-1]
+    cat = words[5]
+    return Error(test, cat)
+
 ############################################################
 # There should be no need to make changes below this line. #
 ############################################################
@@ -101,6 +107,8 @@ if __name__ == "__main__":
     filename = argv[1]
     if "unit" in filename:
         errorFun = unitErrors
+    elif "uml" in filename or "Additional" in filename:
+        errorFun = umlErrors
     else:
         stderr.write("Warning: No customized witness detection available for file.\n")
         errorFun = genericErrors
@@ -109,15 +117,14 @@ if __name__ == "__main__":
     errors = {} # string -> Error
     students = {} # string -> Student
     with open(filename) as file:
-        for line in file:
-            words = split(split(line, ",")[1])
+        for witness in file:
+            words = split(split(witness, ",")[1])
             student = words[0]
             result = words[1]
-            witness = lower(join(words[3:]))
             if student not in students:
                 students[student] = Student()
             if result != "passed":
-                error = errorFun(witness)
+                error = errorFun(lower(witness))
                 if error:
                     if error.name not in errors:
                         errors[error.name] = error

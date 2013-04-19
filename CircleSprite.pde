@@ -1,6 +1,3 @@
-final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
-final float CIRCLESPACING = 5.0;
-
 class CircleSprite extends Sprite{
     ErrorModel model;
     DetailSprite detail;

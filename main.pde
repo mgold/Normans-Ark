@@ -3,6 +3,8 @@ static final int DEFAULT_WIDTH = 800;
 static final float DEFAULT_TEXT_SIZE = 12;
 static final float CANVAS_DIV = .6;
 static final float MARGIN = .0125;
+static final float MAXCIRCLESIZE = 0.2 * DEFAULT_HEIGHT;
+static final float CIRCLESPACING = 5.0;
 
 ArrayList<CircleSprite> circles;
 DataModel data;
@@ -34,7 +36,7 @@ void setup(){
     float keyMin = circles.get(0).sortKey();
     float keyMax = circles.get(circles.size() -1).sortKey();
     for (CircleSprite c : circles){
-        c.setY(25.0, keyMin, height-50.0, keyMax);
+        c.setY(MAXCIRCLESIZE, keyMin, height-MAXCIRCLESIZE, keyMax);
     }
 
     //bubble sort shallow copy by descending circle radius
