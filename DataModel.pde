@@ -2,6 +2,7 @@ class DataModel{
     private ArrayList<ErrorModel> errors;
     private ArrayList<String> categories;
     private HashMap<String, StudentModel> students;
+    private CircleSprite selected;
 
     DataModel(){
         errors = new ArrayList();
@@ -9,6 +10,7 @@ class DataModel{
         students = new HashMap();
         ParserModel parser = new ParserModel();
         parser.parse("data.csv", categories, errors, students);
+        clearSelected();
     }
 
     int getNumStudents(){
@@ -38,14 +40,13 @@ class DataModel{
           return i;
         }
       }
-      
       return -1;
     }
 
     StudentModel getStudent(String name){
         return students.get(name);
     }
-    
+
     StudentModel[] getStudents() {
         return students.values().toArray( new StudentModel[0] ); 
     }
@@ -53,9 +54,21 @@ class DataModel{
     int colorIDForCategory(String cat){
         return categories.indexOf(cat);
     }
-    
+
     String getCategory( int catId ) {
         return categories.get( catId ); 
+    }
+
+    CircleSprite getSelected(){
+        return selected;
+    }
+
+    void setSelected (CircleSprite newbie){
+        selected = newbie;
+    }
+
+    void clearSelected(){
+        selected = null;
     }
 
 }

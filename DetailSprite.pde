@@ -5,16 +5,22 @@ class DetailSprite extends Sprite {
     private ArrayList<StudentModel> students;
 
     public DetailSprite( ErrorModel errorModel ) {
-        this.errorModel = errorModel;
-        this.bars = new ArrayList<BarSprite>();
-        this.students = new ArrayList<StudentModel>();
+        super();
         x = width-(width*(1-CANVAS_DIV)); // TODO change this
         y = MARGIN; // TODO change this
         h = height;
         w = width*( 1-CANVAS_DIV );
+        setModel(errorModel);
+    }
 
-        populateStudents();
-        createBars();
+    public void setModel(ErrorModel errorModel){
+        this.errorModel = errorModel;
+        if (errorModel != null){
+            this.bars = new ArrayList<BarSprite>();
+            this.students = new ArrayList<StudentModel>();
+            populateStudents();
+            createBars();
+        }
     }
 
     private void populateStudents() {
@@ -39,7 +45,7 @@ class DetailSprite extends Sprite {
         bars.add( new BarSprite( students.get( i ), errorModel, _x, _y, _w, _h ) );
       }
     }
-    
+
     private void sortStudents() {
       int errId = data.getErrorId( errorModel );
 
@@ -67,23 +73,25 @@ class DetailSprite extends Sprite {
         fill( colorModel.getDetailBkgdColor() );
         rect( x, y, w, h ); 
 
-        fill( tc );
-        textSize( DEFAULT_TEXT_SIZE*1.5 );
-        textAlign( RIGHT, TOP );
-        float _x = x+(MARGIN*DEFAULT_WIDTH);
-        float _y = y+(2*MARGIN*DEFAULT_HEIGHT);
-        text( errorModel.getName(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
-        _y = y+(8*MARGIN*DEFAULT_HEIGHT);
-        textSize( DEFAULT_TEXT_SIZE*1.2 );
-        fill(colorModel.getColor(data.colorIDForCategory(errorModel.getCategory())));
-        text( errorModel.getCategory(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
+        if (errorModel != null){
+            fill( tc );
+            textSize( DEFAULT_TEXT_SIZE*1.5 );
+            textAlign( RIGHT, TOP );
+            float _x = x+(MARGIN*DEFAULT_WIDTH);
+            float _y = y+(2*MARGIN*DEFAULT_HEIGHT);
+            text( errorModel.getName(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
+            _y = y+(8*MARGIN*DEFAULT_HEIGHT);
+            textSize( DEFAULT_TEXT_SIZE*1.2 );
+            fill(colorModel.getColor(data.colorIDForCategory(errorModel.getCategory())));
+            text( errorModel.getCategory(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
 
-        // set it back to the defaults
-        textSize( DEFAULT_TEXT_SIZE );
-        textAlign(CENTER, CENTER);
+            // set it back to the defaults
+            textSize( DEFAULT_TEXT_SIZE );
+            textAlign(CENTER, CENTER);
 
-        for ( BarSprite bar : bars ) {
-          bar.draw();
+            for ( BarSprite bar : bars ) {
+              bar.draw();
+            }
         }
     }
 

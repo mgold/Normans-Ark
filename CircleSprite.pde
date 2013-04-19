@@ -1,13 +1,11 @@
 class CircleSprite extends Sprite{
     ErrorModel model;
-    DetailSprite detail;
     float dx;
     boolean textDrawn = false;
 
     CircleSprite(int errID){
         super();
         model = data.getError(errID);
-        detail = new DetailSprite( model );
         this.setColor(data.colorIDForCategory(model.getCategory()));
         int numErrors = data.getNumErrors();
         x = 0;
@@ -73,10 +71,6 @@ class CircleSprite extends Sprite{
         super.draw();
         fill(fc);
         ellipse(x,y,w,h);
-
-        if ( this.isSelected() ) {
-          detail.draw();
-        }
     }
 
     void drawText()
