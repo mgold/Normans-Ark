@@ -1,16 +1,16 @@
-Termination,Cells,Output
+Cells,Termination,Memory,Output
 Junk on stderr,Output,0.90278,2
 Exception,Termination,0.84829,7
 Block size too large,Cells,0.80556,4
 Visited block twice,Cells,0.75,3
 Bad contents,Cells,0.70249,2
 Bad cell count,Cells,0.73026,2
-Bad pointer,Cells,0.77778,2
+Bad pointer,Memory,0.77778,2
 Bad return value,Cells,0.7924,3
 Assertion,Termination,0.76067,2
 Segfault,Termination,0.78571,1
-Cannot allocate array,Cells,0.78571,1
-Noncontiguous memory,Cells,0.76389,2
+Cannot allocate array,Memory,0.78571,1
+Noncontiguous memory,Memory,0.76389,2
 Bounds check,Cells,0.8,5
 Block size too small,Cells,0.82429,13
 19
