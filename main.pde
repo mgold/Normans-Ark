@@ -100,6 +100,13 @@ void mouseClicked(){
         }
     }
 
+    if (!newSelection && data.getSelected() != null && mouseX < CANVAS_DIV*width){
+        data.getSelected().deselect();
+        data.clearSelected();
+        detail.setModel(null);
+        newSelection = true;
+    }
+
     if (newSelection){
         if (data.getSelected() != null){
             for (CircleSprite s : circles ){
