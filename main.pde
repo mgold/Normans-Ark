@@ -91,11 +91,9 @@ void mouseClicked(){
     for (CircleSprite s : circles ){
         if (s.intersects(mouseX, mouseY )){
             if (data.getSelected() == s){
-                s.deselect();
                 data.clearSelected();
                 detail.setModel(null);
             } else {
-                s.select();
                 data.setSelected(s);
                 detail.setModel(s.model);
                 println(s);
@@ -106,7 +104,6 @@ void mouseClicked(){
     }
 
     if (!newSelection && data.getSelected() != null && mouseX < CANVAS_DIV*width){
-        data.getSelected().deselect();
         data.clearSelected();
         detail.setModel(null);
         newSelection = true;
