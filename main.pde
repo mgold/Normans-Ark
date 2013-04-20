@@ -111,6 +111,10 @@ void mouseClicked(){
         detail.setModel(null);
         newSelection = true;
     }
+    else if( data.getSelected() != null && mouseX > CANVAS_DIV*width)
+    {
+      detail.mouseClick(mouseX, mouseY);
+    }
 
     if (newSelection){
         if (data.getSelected() != null){

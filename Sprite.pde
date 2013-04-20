@@ -16,12 +16,22 @@ abstract class Sprite{
     }
 
     Sprite(float _x, float _y, float _h, float _w){
-        x = bound(0, _x, width);
-        y = bound(0, _y, height);
+        setX(_x);
+        setY(_y);
         h = _h;
         w = _w;
         fc = #AAAAAA; // grey fill
         sc = NO_STROKE_COLOR;
+    }
+    
+    void setX(float inX)
+    {
+      x = bound(0, inX, width);
+    }
+    
+    void setY(float inY)
+    {
+        y = bound(0, inY, height);
     }
 
     float getX()

@@ -1,8 +1,13 @@
-class DetailSprite extends Sprite {
+class DetailSprite extends Sprite implements Page {
+    private static final int MAX_STUDENTS_PER_PAGE = 10;
     private static final float DEFAULT_BAR_SEP = 40;
     ErrorModel errorModel;
     private ArrayList<BarSprite> bars;
     private ArrayList<StudentModel> students;
+    
+    private int currentPage = 0;
+    
+    PaginationSprite pagination = null;
 
     public DetailSprite( ErrorModel errorModel ) {
         super();
@@ -11,6 +16,9 @@ class DetailSprite extends Sprite {
         h = height;
         w = width*( 1-CANVAS_DIV );
         setModel(errorModel);
+        
+        pagination = new PaginationSprite(getX() +  (w / 2), h - 40);
+        pagination.setPageListener(this);
     }
 
     public void setModel(ErrorModel errorModel){
@@ -20,6 +28,7 @@ class DetailSprite extends Sprite {
             this.students = new ArrayList<StudentModel>();
             populateStudents();
             createBars();
+            currentPage = 0;
         }
     }
 
@@ -88,15 +97,57 @@ class DetailSprite extends Sprite {
             // set it back to the defaults
             textSize( DEFAULT_TEXT_SIZE );
             textAlign(CENTER, CENTER);
-
-            for ( BarSprite bar : bars ) {
-              bar.draw();
+            
+            if(bars.size() > MAX_STUDENTS_PER_PAGE)
+            {
+              pagination.draw();
+              pagination.drawPageNumber(currentPage + 1);
             }
+          
+            int firstBarIndex = currentPage * MAX_STUDENTS_PER_PAGE;
+            int lastBarIndex = min(firstBarIndex + MAX_STUDENTS_PER_PAGE, bars.size());
+            int pageBarCounter = 0;
+            for(int i = firstBarIndex; i < lastBarIndex; ++i)
+            {
+              BarSprite b = bars.get(i);
+              b.setY(getY() + (2 * MARGIN * DEFAULT_HEIGHT) + (++pageBarCounter * DEFAULT_BAR_SEP));
+              b.draw();
+            }
+            
         }
+    }
+    
+    void mouseClick(int inX, int inY)
+    {
+      pagination.mouseClick(inX, inY);
     }
 
     boolean intersects( int _x, int _y ) {
       return _x >= x && _x <= x + w && _y >= y && _y <= y + h;
+    }
+    
+    public void pageBackward()
+    {
+      if(currentPage == 0)
+      {
+        currentPage = (int) (bars.size() / MAX_STUDENTS_PER_PAGE);
+      }
+      else
+      {
+        --currentPage;
+      }
+    }
+    
+    public void pageForward()
+    {
+      if(currentPage == (int) (bars.size() / MAX_STUDENTS_PER_PAGE))
+      {
+        currentPage = 0;
+      }
+      else
+      {
+        ++currentPage;
+      }
     }
 
 }

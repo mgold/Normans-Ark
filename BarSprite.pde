@@ -24,6 +24,16 @@ class BarSprite extends Sprite {
       return sortKey;
     }
     
+    void setY(float inY)
+    {
+      super.setY(inY);
+      
+      for(MiniBarSprite part : parts)
+      {
+        part.setY(inY);
+      }
+    }
+    
     private void createParts() {
         int total = student.timesPassed();
         HashMap<Integer, Integer> errorCounts = new HashMap<Integer, Integer>();
