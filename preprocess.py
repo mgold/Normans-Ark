@@ -55,7 +55,7 @@ def umlErrors(witness):
     elif "signalled a bug in type inference" in witness:
         return Error("Signalled Bug", "Type Inference")
     elif "typed-incorrectly" in witness:
-        return Error("Typed Incorrectly", "Type Inference")
+        return Error("Wrong Type", "Type Inference")
     elif "did-not-type" in witness:
         return Error("Did Not Type", "Type Inference")
     elif "typed-untypeable" in witness:

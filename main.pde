@@ -3,12 +3,14 @@ static final int DEFAULT_WIDTH = 800;
 static final float DEFAULT_TEXT_SIZE = 12;
 static final float CANVAS_DIV = .6;
 static final float MARGIN = .0125;
+static final float COMMENT_HEIGHT = .2;
 static final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
 static final float CIRCLESPACING = 5.0;
 
-ArrayList<CircleSprite> circles;
 DataModel data;
+ArrayList<CircleSprite> circles;
 DetailSprite detail;
+CommentSprite comment;
 
 void setup(){
     size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -17,6 +19,7 @@ void setup(){
 
     data = new DataModel();
     detail = new DetailSprite(null);
+    comment = new CommentSprite();
 
     circles = new ArrayList(data.getNumErrors());
     for (int i = 0; i < data.getNumErrors(); i++){
@@ -49,7 +52,7 @@ void setup(){
     float keyMin = circles.get(0).sortKey();
     float keyMax = circles.get(circles.size()-1).sortKey();
     for (CircleSprite c : circles){
-        c.setY(rMax, keyMin, height-rMax, keyMax);
+        c.setY(rMax, keyMin, height-(height*COMMENT_HEIGHT)-rMax, keyMax);
     }
 
     //assign X values
@@ -67,6 +70,7 @@ void draw(){
         s.update();
     }
     detail.update();
+    comment.update();
 
     for (Sprite s : circles){
         s.draw();
@@ -79,6 +83,7 @@ void draw(){
     }
 
     detail.draw();
+    comment.draw();
 }
 
 void mouseClicked(){

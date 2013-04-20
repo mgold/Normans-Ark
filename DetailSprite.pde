@@ -96,11 +96,7 @@ class DetailSprite extends Sprite {
     }
 
     boolean intersects( int _x, int _y ) {
-      if ( _x >= x && _x <= x + w &&
-           _y >= y && _y <= y + h ) {
-         return true;
-       } else {
-         return false;
-       }
+      return _x >= x && _x <= x + w && _y >= y && _y <= y + h;
     }
+
 }
