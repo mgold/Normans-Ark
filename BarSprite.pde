@@ -85,9 +85,10 @@ class BarSprite extends Sprite {
           }
         }
         // draw the green part (passing)
-        fill( colorModel.getPassingColor() );
-        ErrorModel e = new ErrorModel( "Passed", "", -1, -1 );
-        parts.add( new MiniBarSprite( e, false, barX + usedW, y, barW-usedW, h ) );
+        if (student.timesPassed() > 0){
+            ErrorModel e = new ErrorModel( "Passed", "", -1, -1 );
+            parts.add( new MiniBarSprite( e, false, barX + usedW, y, barW-usedW, h ) );
+        }
     }
     
     void draw(){
