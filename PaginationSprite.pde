@@ -17,8 +17,8 @@ class PaginationSprite extends Sprite
     setX(inX);
     setY(inY);
     
-    leftArrow = new LeftArrowSprite(getX(), getY());
-    rightArrow  = new RightArrowSprite(getX() + TRIANGLE_HEIGHT + TRIANGLE_SPACING, getY());
+    leftArrow = new LeftArrowSprite(getX() - (TRIANGLE_SPACING / 2) - TRIANGLE_HEIGHT, getY());
+    rightArrow  = new RightArrowSprite(getX() + (TRIANGLE_SPACING/2), getY());
   }
   
   void setPageListener(Page listener)
@@ -44,7 +44,7 @@ class PaginationSprite extends Sprite
   void drawPageNumber(int pageNumber)
   {
     textAlign(LEFT, BOTTOM);
-    text("Page " + pageNumber, getX(), getY() + TRIANGLE_SIDE + PAGE_TEXT_SPACING);
+    text("Page " + pageNumber, getX() - (TRIANGLE_SPACING / 2) - TRIANGLE_HEIGHT, getY() + TRIANGLE_SIDE + PAGE_TEXT_SPACING);
   }
     
   void mouseClick(int inX, int inY)
