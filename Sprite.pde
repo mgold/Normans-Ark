@@ -43,6 +43,16 @@ abstract class Sprite{
       return y;
     }
 
+    float getW()
+    {
+        return w;
+    }
+
+    float getH()
+    {
+        return h;
+    }
+
     abstract void update();
 
     void draw(){

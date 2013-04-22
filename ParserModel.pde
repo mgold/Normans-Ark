@@ -4,15 +4,17 @@ class ParserModel{
     }
 
     //parses filename and places info into already-instantiated ArrayList args
-    void parse(String filename, ArrayList<String> categories,
+    //returns lines of comments
+    int parse(String filename, ArrayList<String> categories,
     ArrayList<ErrorModel> errors, HashMap<String,StudentModel> students) {
         String lines[] = loadStrings(filename);
-        String line [] = split(lines[0], ',');
+        int commentLines = int(lines[0]);
+        String line [] = split(lines[1], ',');
         for (String cat : line){
             categories.add(cat);
         }
 
-        int i = 1;
+        int i = 2;
         while(true){
             line = split(lines[i], ',');
             if (line.length == 1){
@@ -28,6 +30,7 @@ class ParserModel{
             students.put(name, new StudentModel(lines[i]));
         }
 
+        return commentLines;
     }
 
 }

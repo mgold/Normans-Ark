@@ -1,10 +1,15 @@
 class CommentSprite extends Sprite {
+    int numLines;
 
-    public CommentSprite() {
+    public CommentSprite(int nl) {
         super();
+        numLines = nl;
         x = width*MARGIN;
-        y = (1-COMMENT_HEIGHT)*height;
-        h = COMMENT_HEIGHT*height;
+        h = COMMENT_LINE_HEIGHT*numLines+COMMENT_LINE_MARGIN*(numLines+1);
+        if (numLines == 0){
+            h = 0;
+        }
+        y = height-h;
         w = width*(CANVAS_DIV-2*MARGIN);
     }
 

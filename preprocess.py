@@ -122,8 +122,10 @@ if __name__ == "__main__":
     filename = argv[1]
     if "unit" in filename:
         errorFun = unitErrors
+        print 0
     elif "uml" in filename or "Additional" in filename:
         errorFun = umlErrors
+        print 0
     else:
         stderr.write("Warning: No customized witness detection available for file.\n")
         errorFun = genericErrors

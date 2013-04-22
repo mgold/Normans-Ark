@@ -3,13 +3,14 @@ class DataModel{
     private ArrayList<String> categories;
     private HashMap<String, StudentModel> students;
     private CircleSprite selected;
+    private int numCommentLines;
 
     DataModel(){
         errors = new ArrayList();
         categories = new ArrayList();
         students = new HashMap();
         ParserModel parser = new ParserModel();
-        parser.parse("data.csv", categories, errors, students);
+        numCommentLines = parser.parse("data.csv", categories, errors, students);
         clearSelected();
     }
 
@@ -23,6 +24,10 @@ class DataModel{
 
     int getNumCategories(){
         return categories.size();
+    }
+
+    int getNumCommentLines(){
+        return numCommentLines;
     }
 
     ErrorModel getError(int errID){
