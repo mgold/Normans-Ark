@@ -12,6 +12,7 @@ DataModel data;
 ArrayList<CircleSprite> circles;
 DetailSprite detail;
 CommentSprite comment;
+ScaleSprite scale;
 
 void setup(){
     size(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -50,11 +51,14 @@ void setup(){
 
     //assign Y values
     float rMax   = circlesBySize.get(0).getRadius()+CIRCLESPACING;
+    float yMax   = height-comment.getH()-rMax;
     float keyMin = circles.get(0).sortKey();
     float keyMax = circles.get(circles.size()-1).sortKey();
     for (CircleSprite c : circles){
-        c.setY(rMax, keyMin, height-comment.getH()-rMax, keyMax);
+        c.setY(rMax, keyMin, yMax, keyMax);
     }
+    
+    scale = new ScaleSprite(keyMin, keyMax, yMax, rMax);
 
     //assign X values
     for (CircleSprite c : circlesBySize){
@@ -85,6 +89,7 @@ void draw(){
 
     detail.draw();
     comment.draw();
+    scale.draw();
 }
 
 void mouseClicked(){
