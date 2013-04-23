@@ -45,13 +45,12 @@ class DetailSprite extends Sprite implements Page {
     private void createBars() { // TODO: using dummy student data
       sortStudents(); 
 
+      float _x = x+(MARGIN*DEFAULT_WIDTH);
+      float _y = y+(4*MARGIN*DEFAULT_HEIGHT);
+      float _w = w - (MARGIN*DEFAULT_WIDTH);
+      float _h = DEFAULT_BAR_HEIGHT*(height/main.DEFAULT_HEIGHT);
       for ( int i = 0; i < students.size(); i++ ) {
-        float _x = x+(MARGIN*DEFAULT_WIDTH);
-        float _y = y+(2*MARGIN*DEFAULT_HEIGHT)+((i+1)*DEFAULT_BAR_SEP);
-        float _w = w - (MARGIN*DEFAULT_WIDTH);
-        float _h = DEFAULT_BAR_HEIGHT*(height/main.DEFAULT_HEIGHT);
-        //float _w = DEFAULT_BAR_WIDTH*(width/main.DEFAULT_WIDTH);
-        bars.add( new BarSprite( students.get( i ), errorModel, _x, _y, _w, _h ) );
+        bars.add( new BarSprite( students.get( i ), errorModel, _x, _y+((i+1)*DEFAULT_BAR_SEP), _w, _h ) );
       }
     }
 
@@ -110,7 +109,7 @@ class DetailSprite extends Sprite implements Page {
             for(int i = firstBarIndex; i < lastBarIndex; ++i)
             {
               BarSprite b = bars.get(i);
-              b.setY(getY() + (2 * MARGIN * DEFAULT_HEIGHT) + (++pageBarCounter * DEFAULT_BAR_SEP));
+              b.setY(getY() + (4 * MARGIN * DEFAULT_HEIGHT) + (++pageBarCounter * DEFAULT_BAR_SEP));
               b.draw();
             }
             
@@ -119,7 +118,23 @@ class DetailSprite extends Sprite implements Page {
     
     void mouseClick(int inX, int inY)
     {
-      pagination.mouseClick(inX, inY);
+      if ( pagination.intersects( inX, inY ) ) {
+        pagination.mouseClick( inX, inY );
+      } else {
+        for ( BarSprite bar : bars ) {
+          if ( bar.intersects( inX, inY ) ) {
+            bar.mouseClick( inX, inY );
+          }
+        }
+      }
+    }
+    
+    void mouseOver( int _x, int _y ) {
+      for ( BarSprite bar : bars ) {
+        if ( bar.intersects( _x, _y ) ) {
+          bar.mouseOver( _x, _y );
+        }
+      } 
     }
 
     boolean intersects( int _x, int _y ) {

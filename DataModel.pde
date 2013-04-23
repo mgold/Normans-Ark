@@ -2,6 +2,7 @@ class DataModel{
     private ArrayList<ErrorModel> errors;
     private ArrayList<String> categories;
     private HashMap<String, StudentModel> students;
+    private HashMap<Integer, CircleSprite> circles;
     private CircleSprite selected;
     private int numCommentLines;
 
@@ -9,6 +10,7 @@ class DataModel{
         errors = new ArrayList();
         categories = new ArrayList();
         students = new HashMap();
+        circles = new HashMap();
         ParserModel parser = new ParserModel();
         numCommentLines = parser.parse("data.csv", categories, errors, students);
         clearSelected();
@@ -74,6 +76,14 @@ class DataModel{
 
     void clearSelected(){
         selected = null;
+    }
+    
+    void addCircle( CircleSprite c, int errId ) {
+      circles.put( errId, c );
+    }
+    
+    CircleSprite getCircle( int errId ) {
+      return circles.get( errId ); 
     }
 
 }

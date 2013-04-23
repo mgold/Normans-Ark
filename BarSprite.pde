@@ -24,17 +24,16 @@ class BarSprite extends Sprite {
       return sortKey;
     }
     
-    void setY(float inY)
-    {
+    void setY(float inY) {
       super.setY(inY);
       
-      for(MiniBarSprite part : parts)
-      {
+      for(MiniBarSprite part : parts) {
         part.setY(inY);
       }
     }
     
     private void createParts() {
+        // count the tests failed per error
         int total = student.timesPassed();
         HashMap<Integer, Integer> errorCounts = new HashMap<Integer, Integer>();
         for ( int i = 0; i < data.getNumErrors(); i++ ) {
@@ -42,41 +41,26 @@ class BarSprite extends Sprite {
           int timesFailed = student.timesFailed( i );
           if ( timesFailed > 0 ) {
             total += timesFailed;
-            Integer prevTally = errorCounts.get( i );
-            if ( prevTally == null ) {
-              errorCounts.put( i, timesFailed );
-            } else {
-              errorCounts.put( i, prevTally + timesFailed ); 
-            }
+            errorCounts.put( i, timesFailed );
           }
         }
-      
-        print( student.getName() + ":\n" );
-        HashMap<Integer, Float> proportions = new HashMap<Integer, Float>();
-        for ( Integer errId : errorCounts.keySet() ) {
-          float proportion = ( (float) errorCounts.get( errId ) ) / total;
-          proportions.put( errId, proportion );
-          print( "\t" + errId + ": " + proportion + "\n" );
-        }
-      
-        float _w = w - DEFAULT_BAR_WIDTH*w - 2*MARGIN*DEFAULT_WIDTH;      
-        float barX = x + MARGIN*DEFAULT_WIDTH + _w;
+
         float barW = DEFAULT_BAR_WIDTH*w;
+        float barX = x + w - barW - MARGIN*DEFAULT_WIDTH;
 
-        //rect(barX, y, barW, h);
-
+        // create the sub-sprites, grouped by category
         float usedW = 0;
         for ( int i = 0; i < data.getNumCategories(); i++ ) {
           String category = data.getCategory( i );
 
-          for ( Integer errId : proportions.keySet() ) {
+          for ( Integer errId : errorCounts.keySet() ) {
             ErrorModel e = data.getError( errId );
             if ( category.equals( e.getCategory() ) ) {
-              float proportion = proportions.get( errId );
+              float proportion = ( (float) errorCounts.get( errId ) ) / total;
               boolean highlighted = false;
-              if ( e.equals( error ) ) {
+              if ( e.equals( error ) ) { // special attributes for the highlighted error
                 highlighted = true;
-                sortKey = proportion;
+                sortKey = proportion; // this is for sorting by student experiencing this error most
               }
 
               parts.add( new MiniBarSprite( e, highlighted, barX + usedW, y, proportion*barW, h ) );
@@ -84,8 +68,9 @@ class BarSprite extends Sprite {
             }
           }
         }
+
         // draw the green part (passing)
-        if (student.timesPassed() > 0){
+        if ( student.timesPassed() > 0 ){
             ErrorModel e = new ErrorModel( "Passed", "", -1, -1 );
             parts.add( new MiniBarSprite( e, false, barX + usedW, y, barW-usedW, h ) );
         }
@@ -119,9 +104,29 @@ class BarSprite extends Sprite {
     void update(){
         ;
     }
+    
+    ErrorModel whichError( int _x, int _y ) {
+      for ( MiniBarSprite part : parts ) {
+        if ( part.intersects( _x, _y ) ) {
+          return part.getError();
+        } 
+      }
+      
+      return null;
+    }
+    
+    int whichTest( int _x, int _y ) {
+      for ( MiniBarSprite part : parts ) {
+        if ( part.intersects( _x, _y ) ) {
+          return part.whichTest( _x, _y );
+        }
+      }
+      
+      return -1;
+    }
 
     boolean intersects( int _x, int _y ) {
-      for ( MiniBarSprite part: parts ) {
+      for ( MiniBarSprite part : parts ) {
         if ( part.intersects( _x, _y ) ) {
             return true;
         } 
@@ -129,11 +134,27 @@ class BarSprite extends Sprite {
       
       return false;
     }
+
+    void mouseClick( int _x, int _y ) {
+      for ( MiniBarSprite part : parts ) {
+        if ( part.intersects( _x, _y ) ) {
+          part.mouseClick( _x, _y );
+        }
+      }
+    }
     
+    void mouseOver( int _x, int _y ) {
+      for ( MiniBarSprite part : parts ) {
+        if ( part.intersects( _x, _y ) ) {
+          print( "Mousing over test " + part.whichTest( _x, _y ) + " of " + part.getError().getName() + "\n" );
+        }
+      }
+    }
     
     class MiniBarSprite extends Sprite {
       private ErrorModel error;
       private boolean highlighted;
+      boolean isPassed = false;
       
       public MiniBarSprite( ErrorModel error, boolean highlighted, float _x, float _y, float _w, float _h ) {
         this.error = error;
@@ -146,6 +167,7 @@ class BarSprite extends Sprite {
         if ( !cat.isEmpty() ) {
           this.fc = colorModel.getColor( data.colorIDForCategory( cat ) );
         } else {
+          isPassed = true;
           this.fc = colorModel.getPassingColor();
         }
       }
@@ -156,25 +178,37 @@ class BarSprite extends Sprite {
         fill( fc );
         
         if ( highlighted ) {
-//          stroke( colorModel.getActiveErrorColor() );
-          
           rect(x, y - 4, w, h + 8);
-//          strokeWeight( 1 );
-//          line( x, y+h+2, x, y+h+6 );
-//          line( x, y+h+4, x+w, y+h+4 );
-//          line( x+w, y+h+2, x+w, y+h+6 );
-          //strokeWeight( 1.5 );
-          //noFill();
-          //rect( x, y-2, w, h+3 );
-        }
-        else
-        {
+        } else {
           rect( x, y, w, h );
         }
       }
       
       ErrorModel getError() {
         return this.error; 
+      }
+      
+      void mouseClick( int _x, int _y ) {
+        if ( !isPassed ) { // if it's not "Passed"
+          CircleSprite selected = data.getCircle( data.getErrorId( error ) );
+          data.clearSelected();
+          data.setSelected( selected );
+          detail.setModel( selected.model );
+        }
+      }
+      
+      int whichTest( int _x, int _y ) {
+        int numTests;
+        if ( isPassed ) {
+          numTests = student.timesPassed();
+        } else {
+          numTests = student.timesFailed( data.getErrorId( error ) );
+        }
+        
+        float widthPerTest = w / (float) numTests;
+        float offset = _x - x; // the offset from the start of this minibar
+
+        return ceil( offset/widthPerTest );
       }
       
       boolean intersects( int _x, int _y ) {

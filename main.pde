@@ -25,7 +25,9 @@ void setup(){
 
     circles = new ArrayList(data.getNumErrors());
     for (int i = 0; i < data.getNumErrors(); i++){
-        circles.add(new CircleSprite(i));
+        CircleSprite c = new CircleSprite(i);
+        circles.add( c );
+        data.addCircle( c, i );
     }
 
     //bubble sort by grade given error
@@ -94,9 +96,9 @@ void draw(){
 
 void mouseClicked(){
     boolean newSelection = false;
-    for (CircleSprite s : circles ){
-        if (s.intersects(mouseX, mouseY )){
-            if (data.getSelected() == s){
+    for ( CircleSprite s : circles ){
+        if ( s.intersects( mouseX, mouseY ) ) {
+            if ( data.getSelected() == s ) {
                 data.clearSelected();
                 detail.setModel(null);
             } else {
@@ -106,27 +108,31 @@ void mouseClicked(){
             }
             newSelection = true;
             break;
+        } else if ( detail.intersects( mouseX, mouseY ) ) {
+          newSelection = true; 
         }
     }
 
-    if (!newSelection && data.getSelected() != null && mouseX < CANVAS_DIV*width){
-        data.clearSelected();
-        detail.setModel(null);
-        newSelection = true;
-    }
-    else if( data.getSelected() != null && mouseX > CANVAS_DIV*width)
-    {
-      detail.mouseClick(mouseX, mouseY);
+    if ( data.getSelected() != null ) {
+      if ( mouseX < CANVAS_DIV*width ) {
+          if ( !newSelection ) {
+            data.clearSelected();
+            detail.setModel( null );
+            newSelection = true;
+          }
+      } else {
+        detail.mouseClick( mouseX, mouseY );
+      }
     }
 
-    if (newSelection){
-        if (data.getSelected() != null){
-            for (CircleSprite s : circles ){
+    if ( newSelection ){
+        if ( data.getSelected() != null ){
+            for ( CircleSprite s : circles ){
                 s.fade();
             }
             data.getSelected().focus();
-        }else{
-            for (CircleSprite s : circles ){
+        } else {
+            for ( CircleSprite s : circles ){
                 s.focus();
             }
         }
@@ -140,5 +146,9 @@ void mouseMoved(){
         } else {
             s.unsetHighlight();
         }
+    }
+    
+    if ( mouseX > CANVAS_DIV*width ) {
+      detail.mouseOver( mouseX, mouseY );
     }
 }

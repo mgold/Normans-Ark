@@ -26,6 +26,10 @@ class ScaleSprite extends Sprite
     return true;
   }
   
+  void mouseClick(int _x, int _y) {
+    ;
+  }
+  
   void draw()
   {
     stroke(#000000);

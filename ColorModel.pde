@@ -29,7 +29,7 @@ class ColorModel {
   }
 
   color getFaded(color c) {
-    return color( c, 50 ); 
+    return color( c, 100 ); 
   }
   
   color getPassingColor() {

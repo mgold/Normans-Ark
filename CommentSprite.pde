@@ -28,5 +28,9 @@ class CommentSprite extends Sprite {
     boolean intersects( int _x, int _y ) {
       return _x >= x && _x <= x + w && _y >= y && _y <= y + h;
     }
+    
+    void mouseClick( int _x, int _y ) {
+      ;
+    }
 
 }

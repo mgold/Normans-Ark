@@ -77,6 +77,8 @@ abstract class Sprite{
     }
 
     abstract boolean intersects(int _x, int _y);
+    
+    abstract void mouseClick(int _x, int _y);
 
     float sortKey(){
         return 0;

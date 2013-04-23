@@ -108,6 +108,10 @@ class CircleSprite extends Sprite{
         }
       }
     }
+    
+    void mouseClick( int _x, int _y ) {
+      ; 
+    }
 
     boolean intersects(CircleSprite other){
         return intersects(other, 0);
