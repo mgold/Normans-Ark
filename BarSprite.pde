@@ -204,11 +204,19 @@ class BarSprite extends Sprite {
         } else {
           numTests = student.timesFailed( data.getErrorId( error ) );
         }
-        
+
         float widthPerTest = w / (float) numTests;
         float offset = _x - x; // the offset from the start of this minibar
+        
+        int testNum = ceil( offset/widthPerTest );
 
-        return ceil( offset/widthPerTest );
+        if ( testNum < 1 ) {
+          return 1;
+        } else if ( testNum > numTests ) {
+          return numTests;
+        } else {
+          return testNum;
+        }
       }
       
       boolean intersects( int _x, int _y ) {
