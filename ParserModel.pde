@@ -20,8 +20,12 @@ class ParserModel{
             if (line.length == 1){
                 break;
             }
-            errors.add(new ErrorModel(line[0], line[1], float(line[2]), int(line[3])));
-            i++;
+            if (line[0] == "|"){
+                ; //add comment
+            }else{
+                errors.add(new ErrorModel(line[0], line[1], float(line[2]), int(line[3])));
+                i++;
+            }
         }
 
         int numStudents = int(line[0]);

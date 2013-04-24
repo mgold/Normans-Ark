@@ -58,27 +58,28 @@ def unitErrors(witness):
     elif "visited block twice" in witness:
         return Error("Visited block twice", "Cells")
     else:
-        stderr.write("Warning: Unrecognized witness \""+witness+"\"\n")
+        stderr.write('Warning: Unrecognized witness "'+witness+'"\n')
         return None
 
 
 def umlErrors(witness):
+    comment = [split(witness)[1], split(witness)[3]]
     if "uncaught exception" in witness:
-        return Error(witness[rindex(witness, ' ')+1:-2], "Exception")
+        return Error(witness[rindex(witness, ' ')+1:-2], "Exception"), comment
     elif "CPU time" in witness:
-        return Error("CPU Time", "Runtime")
+        return Error("CPU Time", "Runtime"), comment
     elif "wrote the error message" in witness:
-        return Error("Wrote Error", "Runtime")
+        return Error("Wrote Error", "Runtime"), comment
     elif "signalled a bug in type inference" in witness:
-        return Error("Signalled Bug", "Type Inference")
+        return Error("Signalled Bug", "Type Inference"), comment
     elif "typed-incorrectly" in witness:
-        return Error("Wrong Type", "Type Inference")
+        return Error("Wrong Type", "Type Inference"), comment
     elif "did-not-type" in witness:
-        return Error("Did Not Type", "Type Inference")
+        return Error("Did Not Type", "Type Inference"), comment
     elif "typed-untypeable" in witness:
-        return Error("Typed Untypeable", "Type Inference")
+        return Error("Typed Untypeable", "Type Inference"), comment
     else:
-        stderr.write("Warning: Unrecognized witness \""+witness+"\"\n")
+        stderr.write('Warning: Unrecognized witness "'+witness+'"\n')
         return None
 
 ############################################################
@@ -132,12 +133,15 @@ class Student:
     def addCommentForError(self, cmnt, error):
         if error not in self.comments:
             self.comments[error] = []
-        self.comments[error] += cmnt
+        self.comments[error].append(cmnt)
 
     def printCommentForError(self, error):
         if error in self.comments:
-            for cmnt in self.comments[error]:
-                print cmnt
+            for cmntList in self.comments[error]:
+                outstr = ""
+                for cmntStr in cmntList:
+                    outstr += "|"+cmntStr
+                print outstr
 
 if __name__ == "__main__":
     from sys import argv;
@@ -169,7 +173,7 @@ if __name__ == "__main__":
                         stderr.write("Error: expected comment to be a list of of strings.\n")
                         exit();
                     numCommentLines = max(numCommentLines, len(comment))
-                    student.addCommentForError(comment, error.name)
+                    students[student].addCommentForError(comment, error.name)
                 else:
                     error = returned
                 if error:
