@@ -2,4 +2,6 @@
 *.csv
 *.pyc
 *.swp
+*.pdf
+*.outcomes.*
 */*
