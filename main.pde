@@ -22,7 +22,6 @@ void setup(){
     data = new DataModel();
     detail = new DetailSprite(null);
     comment = new CommentSprite(data.getNumCommentLines());
-    scale = new ScaleSprite(keyMin, keyMax, yMax, rMax);
 
     circles = new ArrayList();
     for (int i = 0; i < data.getNumErrors(); i++){
@@ -41,30 +40,39 @@ void setup(){
         }
     }
 
-    //bubble sort shallow copy by descending circle radius
-    ArrayList<CircleSprite> circlesBySize = new ArrayList(circles);
-    for (int i=0; i<circlesBySize.size(); i++){
-        for (int j=0; j<circlesBySize.size()-1; j++){
-            if (circlesBySize.get(j).getRadius()< circlesBySize.get(j+1).getRadius()){
-                CircleSprite removed = circlesBySize.remove(j);
-                circlesBySize.add(j+1, removed);
+    //save important values
+    float rMax=0;
+    for (CircleSpite c : circles){
+        if (c.getRadius() > rMax){
+            rMax = c.getRadius();
+        }
+    }
+    rMax += CIRCLESPACING;
+    float yMax   = height-comment.getH()-rMax;
+    float keyMin = circles.get(0).sortKey();
+    float keyMax = circles.get(circles.size()-1).sortKey();
+
+    //bubble sort by radius
+    for (int i=0; i<circles.size(); i++){
+        for (int j=0; j<circles.size()-1; j++){
+            if (circles.get(j).getRadius() < circles.get(j+1).getRadius()){
+                CircleSprite removed = circles.remove(j);
+                circles.add(j+1, removed);
             }
         }
     }
 
     //assign Y values
-    float rMax   = circlesBySize.get(0).getRadius()+CIRCLESPACING;
-    float yMax   = height-comment.getH()-rMax;
-    float keyMin = circles.get(0).sortKey();
-    float keyMax = circles.get(circles.size()-1).sortKey();
     for (CircleSprite c : circles){
         c.setY(rMax, keyMin, yMax, keyMax);
     }
 
     //assign X values
-    for (CircleSprite c : circlesBySize){
-        c.setX(circlesBySize);
+    for (CircleSprite c : circles){
+        c.setX(circles);
     }
+
+    scale = new ScaleSprite(keyMin, keyMax, yMax, rMax);
 
 }
 
@@ -103,7 +111,6 @@ void mouseClicked(){
             } else {
                 data.setSelected(s);
                 detail.setModel(s.model);
-                println(s);
             }
             newSelection = true;
             break;
