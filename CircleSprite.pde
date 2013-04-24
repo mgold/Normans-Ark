@@ -77,7 +77,7 @@ class CircleSprite extends Sprite{
     {
         // Only draw the text in the circle if the text width
         // will fit in the circle.
-        if ( textWidth(model.getName()) < (w * 2) ) {
+        if ( textWidth(model.getName()) < (w * 1.8) ) {
           textAlign( CENTER, CENTER );
           fill(tc);
           text(model.getName(), x-.5*w, y-.5*h, w, h);
