@@ -45,9 +45,10 @@ def unitErrors(witness):
 
 
 def umlErrors(witness):
+    numComments = 0
     quoteDelim = split(witness, '"');
     if "uncaught exception" in witness:
-        return Error(witness[rindex(witness, ' ')+1:-3], "Exception")
+        return Error(witness[rindex(witness, ' ')+1:-2], "Exception")
     elif "CPU time" in witness:
         return Error("CPU Time", "Runtime")
     elif "wrote the error message" in witness:
@@ -120,12 +121,11 @@ if __name__ == "__main__":
         exit();
 
     filename = argv[1]
+    numComments = 0
     if "unit" in filename:
         errorFun = unitErrors
-        print 0
     elif "uml" in filename or "Additional" in filename:
         errorFun = umlErrors
-        print 0
     else:
         stderr.write("Warning: No customized witness detection available for file.\n")
         errorFun = genericErrors
@@ -154,6 +154,7 @@ if __name__ == "__main__":
 
 
     errorObs = errors.values()
+    print numComments
     catstr = ""
     for cat, freq in categories.most_common():
         catstr += cat+","
