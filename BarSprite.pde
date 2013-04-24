@@ -90,11 +90,12 @@ class BarSprite extends Sprite {
         for ( MiniBarSprite part: parts ) {
           if ( part.intersects( mouseX, mouseY ) ) {
             textAlign(LEFT, CENTER);
+            float textX = min(mouseX+1, width-textWidth(part.getError().getName()));
             // first the drop shadow
             fill(#000000);
-            text( part.getError().getName(), mouseX+1, mouseY-9 );
+            text( part.getError().getName(), textX, mouseY-9 );
             fill(#ffffff);
-            text( part.getError().getName(), mouseX, mouseY-10 );
+            text( part.getError().getName(), textX-1, mouseY-10 );
           } 
         }
 
