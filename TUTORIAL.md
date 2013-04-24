@@ -15,17 +15,17 @@ grades going from the highest estimated grade at the top to the lowest estimated
 grade at the bottom.
 
 Clicking on a circle will bring up a list of students associated with the error
-category on the right side. The visualization on the right side show the student
+category on the right side. The visualization on the right side shows the student
 names along with a segmented bar associated with each student. The segments
 represent all the error categories that the particular student encountered. The
-width of the bar segment represents the percentage of tests that the error
+width of each bar segment represents the percentage of tests that the error
 category appeared in for that particular student. The error category that was
 just selected using the circle is highlighted across all students. The green bar
 segment at the end of at least some of the bars indicates the percentage of
 tests that the student passed.
 
 Hovering over any of the bar segments will show the name of the error category.
-Clicking on the error segment will select the associated circle on the left side
+Clicking on an error segment will select the associated circle on the left side
 and will bring up a new list of students on the right side of the canvas if
 another error category was chosen.
 
