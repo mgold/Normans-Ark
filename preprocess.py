@@ -94,13 +94,9 @@ class Error:
         self.cat = cat
         self.failers = set()
         categories[cat] += 1
-        comments = []
 
     def addFailer(self, failer):
         self.failers.add(failer)
-
-    def addComment(self, cmnt):
-        self.comments += cmnt
 
     def __str__(self):
         ret = self.name+","+self.cat+","
@@ -117,6 +113,7 @@ class Student:
     def __init__(self):
         self.results = Counter();
         self.isPerfect = True
+        self.comments = {}
 
     def addResult(self, result):
         self.results[result] += 1
@@ -131,6 +128,16 @@ class Student:
 
     def getScore(self):
         return float(self.results["passed"]) / sum(self.results.values())
+
+    def addCommentForError(self, cmnt, error):
+        if error not in self.comments:
+            self.comments[error] = []
+        self.comments[error] += cmnt
+
+    def printCommentForError(self, error):
+        if error in self.comments:
+            for cmnt in self.comments[error]:
+                print cmnt
 
 if __name__ == "__main__":
     from sys import argv;
@@ -162,7 +169,7 @@ if __name__ == "__main__":
                         stderr.write("Error: expected comment to be a list of of strings.\n")
                         exit();
                     numCommentLines = max(numCommentLines, len(comment))
-                    error.addComment(comment)
+                    student.addCommentForError(comment, error.name)
                 else:
                     error = returned
                 if error:
@@ -187,10 +194,14 @@ if __name__ == "__main__":
     failers = [s for s in students.values() if not s.isPerfect]
     print len(failers)
     for name in students.keys():
-        if students[name] in failers:
+        student = students[name]
+        if student in failers:
             outstr = name+","
             for error in errorObs:
-                outstr += str(students[name].errorFreq(error.name))+","
-            outstr += str(students[name].errorFreq("passed"))
+                outstr += str(student.errorFreq(error.name))+","
+            outstr += str(student.errorFreq("passed"))
             print outstr
+            for error in errorObs:
+                student.printCommentForError(error.name)
+
 
