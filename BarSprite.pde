@@ -146,7 +146,7 @@ class BarSprite extends Sprite {
     void mouseOver( int _x, int _y ) {
       for ( MiniBarSprite part : parts ) {
         if ( part.intersects( _x, _y ) ) {
-          //print( "Mousing over test " + part.whichTest( _x, _y ) + " of " + part.getError().getName() + "\n" );
+          // print( "Mousing over test " + part.whichTest( _x, _y ) + " of " + part.getError().getName() + "\n" );
         }
       }
     }
@@ -159,10 +159,11 @@ class BarSprite extends Sprite {
       public MiniBarSprite( ErrorModel error, boolean highlighted, float _x, float _y, float _w, float _h ) {
         this.error = error;
         this.highlighted = highlighted;
-        this.x = _x;
-        this.y = _y;
+        setY( _y );
+        setX( _x );
         this.w = _w;
         this.h = _h;
+        if ( highlighted ) this.h += 8;
         String cat = error.getCategory();
         if (cat != "") {
           this.fc = colorModel.getColor( data.colorIDForCategory( cat ) );
@@ -177,11 +178,7 @@ class BarSprite extends Sprite {
 
         fill( fc );
         
-        if ( highlighted ) {
-          rect(x, y - 4, w, h + 8);
-        } else {
-          rect( x, y, w, h );
-        }
+        rect( x, y, w, h );
       }
       
       ErrorModel getError() {
@@ -210,13 +207,15 @@ class BarSprite extends Sprite {
         
         int testNum = ceil( offset/widthPerTest );
 
-        if ( testNum < 1 ) {
-          return 1;
-        } else if ( testNum > numTests ) {
-          return numTests;
-        } else {
-          return testNum;
+        return (int) bound( (float) 1, (float) testNum,  (float) numTests );
+      }
+      
+      // @Override
+      void setY(float inY) {
+        if ( highlighted ) {
+          inY = inY - 4;
         }
+        y = bound(0, inY, height);
       }
       
       boolean intersects( int _x, int _y ) {

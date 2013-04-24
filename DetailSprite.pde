@@ -16,6 +16,7 @@ class DetailSprite extends Sprite implements Page {
         h = height;
         w = width*( 1-CANVAS_DIV );
         setModel(errorModel);
+        this.bars = new ArrayList<BarSprite>();
         
         pagination = new PaginationSprite(getX() +  (w / 2), h - 40);
         pagination.setPageListener(this);
