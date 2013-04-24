@@ -22,6 +22,7 @@ void setup(){
     data = new DataModel();
     detail = new DetailSprite(null);
     comment = new CommentSprite(data.getNumCommentLines());
+    scale = new ScaleSprite(keyMin, keyMax, yMax, rMax);
 
     circles = new ArrayList();
     for (int i = 0; i < data.getNumErrors(); i++){
@@ -59,8 +60,6 @@ void setup(){
     for (CircleSprite c : circles){
         c.setY(rMax, keyMin, yMax, keyMax);
     }
-    
-    scale = new ScaleSprite(keyMin, keyMax, yMax, rMax);
 
     //assign X values
     for (CircleSprite c : circlesBySize){

@@ -163,7 +163,7 @@ class BarSprite extends Sprite {
         this.w = _w;
         this.h = _h;
         String cat = error.getCategory();
-        if ( !cat.isEmpty() ) {
+        if (cat != "") {
           this.fc = colorModel.getColor( data.colorIDForCategory( cat ) );
         } else {
           isPassed = true;
