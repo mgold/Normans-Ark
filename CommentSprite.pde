@@ -1,12 +1,15 @@
 class CommentSprite extends Sprite {
-    int numLines;
+    private int numLines;
+    private int maxNumLines;
+    private String lines [];
 
-    public CommentSprite(int nl) {
+    public CommentSprite(int mnl) {
         super();
-        numLines = nl;
+        maxNumLines = mnl;
+        clearLines();
         x = width*MARGIN;
-        h = COMMENT_LINE_HEIGHT*numLines+COMMENT_LINE_MARGIN*(numLines+1);
-        if (numLines == 0){
+        h = COMMENT_LINE_HEIGHT*maxNumLines+COMMENT_LINE_MARGIN*(maxNumLines+1);
+        if (maxNumLines == 0){
             h = 0;
         }
         y = height-h;
@@ -14,7 +17,7 @@ class CommentSprite extends Sprite {
     }
 
     void update(){
-        ;
+        clearLines();
     }
 
     void draw() {
@@ -23,14 +26,31 @@ class CommentSprite extends Sprite {
         fill(colorModel.getDetailBkgdColor());
         rect( x, y, w, h );
 
+        for (int i = 0; i<numLines; i++){
+            String line = lines[i];
+            textSize(COMMENT_LINE_HEIGHT);
+            fill(#000000);
+            text(line, x+MARGIN, y+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1));
+        }
+
     }
 
     boolean intersects( int _x, int _y ) {
       return _x >= x && _x <= x + w && _y >= y && _y <= y + h;
     }
-    
+
     void mouseClick( int _x, int _y ) {
       ;
+    }
+
+    void clearLines(){
+        lines = null;
+        numLines = 0;
+    }
+
+    void setLines(String newlines []){
+        lines = newlines;
+        numLines = min(maxNumLines, lines.length);
     }
 
 }

@@ -83,8 +83,14 @@ void draw(){
     for (Sprite s : circles){
         s.update();
     }
-    detail.update();
     comment.update();
+    detail.update();
+
+    //temporary
+    String cmnt [] = new String [2];
+    cmnt[0] = "foo";
+    cmnt[1] = "bar";
+    comment.setLines(cmnt);
 
     for (Sprite s : circles){
         s.draw();

@@ -146,7 +146,7 @@ class BarSprite extends Sprite {
     void mouseOver( int _x, int _y ) {
       for ( MiniBarSprite part : parts ) {
         if ( part.intersects( _x, _y ) ) {
-          // print( "Mousing over test " + part.whichTest( _x, _y ) + " of " + part.getError().getName() + "\n" );
+           //print( "Mousing over test " + part.whichTest( _x, _y ) + " of " + part.getError().getName() + "\n" );
         }
       }
     }

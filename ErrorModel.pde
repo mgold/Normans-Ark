@@ -27,4 +27,8 @@ class ErrorModel{
         return nfailers;
     }
 
+    void setAsComment(){
+        ; //stub
+    }
+
 }
