@@ -1,3 +1,21 @@
+# Norman's Ark Preprocessor
+#
+# Error functions are expected to return Error(name, category)
+# where name and category are strings. Optionally, they may also return
+# an array of strings to be shown as comments. If comments are returned
+# by an error function, they must be returned in all cases.
+#
+# pickErrorFun decides which error function to call based on the file name.
+
+def pickErrorFun(filename):
+    if "unit" in filename:
+        return unitErrors
+    elif "uml" in filename or "Additional" in filename:
+        return umlErrors
+    else:
+        stderr.write("Warning: No customized witness detection available for file.\n")
+        return genericErrors
+
 def genericErrors(witness):
     if "assertion" in witness:
         return Error("Assertion", "Termination")
@@ -45,8 +63,6 @@ def unitErrors(witness):
 
 
 def umlErrors(witness):
-    numComments = 0
-    quoteDelim = split(witness, '"');
     if "uncaught exception" in witness:
         return Error(witness[rindex(witness, ' ')+1:-2], "Exception")
     elif "CPU time" in witness:
@@ -69,7 +85,6 @@ def umlErrors(witness):
 # There should be no need to make changes below this line. #
 ############################################################
 
-
 from sys import stderr
 from collections import Counter
 
@@ -79,9 +94,13 @@ class Error:
         self.cat = cat
         self.failers = set()
         categories[cat] += 1
+        comments = []
 
     def addFailer(self, failer):
         self.failers.add(failer)
+
+    def addComment(self, cmnt):
+        self.comments += cmnt
 
     def __str__(self):
         ret = self.name+","+self.cat+","
@@ -121,14 +140,8 @@ if __name__ == "__main__":
         exit();
 
     filename = argv[1]
-    numComments = 0
-    if "unit" in filename:
-        errorFun = unitErrors
-    elif "uml" in filename or "Additional" in filename:
-        errorFun = umlErrors
-    else:
-        stderr.write("Warning: No customized witness detection available for file.\n")
-        errorFun = genericErrors
+    numCommentLines = 0
+    errorFun = pickErrorFun(filename)
 
     categories = Counter() # string
     errors = {} # string -> Error
@@ -141,7 +154,17 @@ if __name__ == "__main__":
             if student not in students:
                 students[student] = Student()
             if result != "passed":
-                error = errorFun(witness)
+                returned = errorFun(witness)
+                if isinstance(returned, tuple):
+                    error = returned[0]
+                    comment = returned[1]
+                    if len(returned) > 2 or not isinstance(comment, list) or not isinstance(comment[0], str):
+                        stderr.write("Error: expected comment to be a list of of strings.\n")
+                        exit();
+                    numCommentLines = max(numCommentLines, len(comment))
+                    error.addComment(comment)
+                else:
+                    error = returned
                 if error:
                     if error.name not in errors:
                         errors[error.name] = error
@@ -154,7 +177,7 @@ if __name__ == "__main__":
 
 
     errorObs = errors.values()
-    print numComments
+    print numCommentLines
     catstr = ""
     for cat, freq in categories.most_common():
         catstr += cat+","
