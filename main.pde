@@ -42,7 +42,7 @@ void setup(){
 
     //save important values
     float rMax=0;
-    for (CircleSpite c : circles){
+    for (CircleSprite c : circles){
         if (c.getRadius() > rMax){
             rMax = c.getRadius();
         }

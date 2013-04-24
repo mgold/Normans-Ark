@@ -114,7 +114,7 @@ class CircleSprite extends Sprite{
     }
 
     boolean intersectsOther(CircleSprite other){
-        return this.intersects(other, 0);
+        return this.intersectsOtherWithSpacing(other, 0);
     }
 
     boolean intersectsOtherWithSpacing(CircleSprite other, float spacing){
