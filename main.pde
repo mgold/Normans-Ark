@@ -23,7 +23,7 @@ void setup(){
     detail = new DetailSprite(null);
     comment = new CommentSprite(data.getNumCommentLines());
 
-    circles = new ArrayList(data.getNumErrors());
+    circles = new ArrayList();
     for (int i = 0; i < data.getNumErrors(); i++){
         CircleSprite c = new CircleSprite(i);
         circles.add( c );
