@@ -48,7 +48,7 @@ class DetailSprite extends Sprite implements Page {
       float _x = x+(MARGIN*DEFAULT_WIDTH);
       float _y = y+(4*MARGIN*DEFAULT_HEIGHT);
       float _w = w - (MARGIN*DEFAULT_WIDTH);
-      float _h = DEFAULT_BAR_HEIGHT*(height/main.DEFAULT_HEIGHT);
+      float _h = DEFAULT_BAR_HEIGHT*(height/DEFAULT_HEIGHT);
       for ( int i = 0; i < students.size(); i++ ) {
         bars.add( new BarSprite( students.get( i ), errorModel, _x, _y+((i+1)*DEFAULT_BAR_SEP), _w, _h ) );
       }

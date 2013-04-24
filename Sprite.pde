@@ -11,7 +11,7 @@ abstract class Sprite{
     Sprite(){
         x = y = h = w = 0;
         sc = NO_STROKE_COLOR;
-        strokeWeight( DEFAULT_STROKE_WEIGHT*(width/main.DEFAULT_WIDTH) );
+        strokeWeight( DEFAULT_STROKE_WEIGHT*(width/DEFAULT_WIDTH) );
     }
 
     Sprite(float _x, float _y, float _h, float _w){

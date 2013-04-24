@@ -5,7 +5,7 @@ class BarSprite extends Sprite {
   private StudentModel student;
   private ErrorModel error;
   private ArrayList<MiniBarSprite> parts;
-  private float sortKey = -1;
+  private float proportion = -1;
 
     BarSprite( StudentModel studentModel, ErrorModel errorModel, float _x, float _y, float _w, float _h ){
         super();
@@ -21,7 +21,7 @@ class BarSprite extends Sprite {
     }
     
     public float sortKey() {
-      return sortKey;
+      return proportion;
     }
     
     void setY(float inY) {
@@ -56,11 +56,10 @@ class BarSprite extends Sprite {
           for ( Integer errId : errorCounts.keySet() ) {
             ErrorModel e = data.getError( errId );
             if ( category.equals( e.getCategory() ) ) {
-              float proportion = ( (float) errorCounts.get( errId ) ) / total;
+              proportion = ( (float) errorCounts.get( errId ) ) / total;
               boolean highlighted = false;
               if ( e.equals( error ) ) { // special attributes for the highlighted error
                 highlighted = true;
-                sortKey = proportion; // this is for sorting by student experiencing this error most
               }
 
               parts.add( new MiniBarSprite( e, highlighted, barX + usedW, y, proportion*barW, h ) );

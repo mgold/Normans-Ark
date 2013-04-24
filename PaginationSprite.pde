@@ -65,7 +65,7 @@ class PaginationSprite extends Sprite
     
     void mouseClick(int inX, int inY)
     {
-      if(intersects(inX, inY) == true)
+      if(this.intersects(inX, inY) == true)
       {
         pageListener.pageBackward();
       }
@@ -110,7 +110,7 @@ class PaginationSprite extends Sprite
     
     void mouseClick(int inX, int inY)
     {
-      if(intersects(inX, inY) == true)
+      if(this.intersects(inX, inY) == true)
       {
         pageListener.pageForward();
       }

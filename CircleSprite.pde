@@ -45,7 +45,7 @@ class CircleSprite extends Sprite{
         for (CircleSprite other : otherCircles){
             if (this == other){
                 return false;
-            }else if (intersects(other, spacing)){
+            }else if (this.intersects(other, spacing)){
                 return true;
             }
         }
@@ -114,7 +114,7 @@ class CircleSprite extends Sprite{
     }
 
     boolean intersects(CircleSprite other){
-        return intersects(other, 0);
+        return this.intersects(other, 0);
     }
 
     boolean intersects(CircleSprite other, float spacing){
