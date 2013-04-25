@@ -107,13 +107,17 @@ class DetailSprite extends Sprite implements Page {
             int firstBarIndex = currentPage * MAX_STUDENTS_PER_PAGE;
             int lastBarIndex = min(firstBarIndex + MAX_STUDENTS_PER_PAGE, bars.size());
             int pageBarCounter = 0;
-            for(int i = firstBarIndex; i < lastBarIndex; ++i)
-            {
+            for(int i = 0; i < bars.size(); ++i) {
               BarSprite b = bars.get(i);
-              b.setY(getY() + (4 * MARGIN * DEFAULT_HEIGHT) + (++pageBarCounter * DEFAULT_BAR_SEP));
-              b.draw();
+
+              if ( i >= firstBarIndex && i < lastBarIndex ) {
+                b.setOnPage( true );
+                b.setY(getY() + (4 * MARGIN * DEFAULT_HEIGHT) + (++pageBarCounter * DEFAULT_BAR_SEP));
+                b.draw();
+              } else {
+                b.setOnPage( false );
+              }
             }
-            
         }
     }
     
@@ -123,7 +127,7 @@ class DetailSprite extends Sprite implements Page {
         pagination.mouseClick( inX, inY );
       } else {
         for ( BarSprite bar : bars ) {
-          if ( bar.intersects( inX, inY ) ) {
+          if ( bar.isOnPage() && bar.intersects( inX, inY ) ) {
             bar.mouseClick( inX, inY );
           }
         }
@@ -132,7 +136,7 @@ class DetailSprite extends Sprite implements Page {
     
     void mouseOver( int _x, int _y ) {
       for ( BarSprite bar : bars ) {
-        if ( bar.intersects( _x, _y ) ) {
+        if ( bar.isOnPage() && bar.intersects( _x, _y ) ) {
           bar.mouseOver( _x, _y );
         }
       } 
