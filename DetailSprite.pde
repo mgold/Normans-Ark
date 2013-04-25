@@ -91,7 +91,10 @@ class DetailSprite extends Sprite implements Page {
             text( errorModel.getName(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
             _y = y+(8*MARGIN*DEFAULT_HEIGHT);
             textSize( DEFAULT_TEXT_SIZE*1.2 );
-            fill(colorModel.getColor(data.colorIDForCategory(errorModel.getCategory())));
+            int colorId = data.colorIDForCategory( errorModel.getCategory() );
+            fill( colorModel.getTextColor( colorId ), 125);
+            text( errorModel.getCategory(), _x+1, _y/2+1, w-(2*MARGIN*DEFAULT_WIDTH), h );
+            fill( colorModel.getColor( colorId ) );
             text( errorModel.getCategory(), _x, _y/2, w-(2*MARGIN*DEFAULT_WIDTH), h );
 
             // set it back to the defaults
