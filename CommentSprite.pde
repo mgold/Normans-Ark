@@ -7,13 +7,13 @@ class CommentSprite extends Sprite {
         super();
         maxNumLines = mnl;
         clearLines();
-        x = width*MARGIN;
+        x = 0;
         h = COMMENT_LINE_HEIGHT*maxNumLines+COMMENT_LINE_MARGIN*(maxNumLines+1);
         if (maxNumLines == 0){
             h = 0;
         }
         y = height-h;
-        w = width*(CANVAS_DIV-2*MARGIN);
+        w = width*(CANVAS_DIV);
     }
 
     void update(){
@@ -31,7 +31,7 @@ class CommentSprite extends Sprite {
             textSize(COMMENT_LINE_HEIGHT);
             textAlign(LEFT, TOP);
             fill(#000000);
-            text(line, x+MARGIN, y+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1), w, COMMENT_LINE_HEIGHT*2);
+            text(line, x+(MARGIN*DEFAULT_WIDTH), y+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1));
         }
 
     }
