@@ -84,6 +84,7 @@ void draw(){
     for (Sprite s : circles){
         s.update();
     }
+
     comment.update();
     detail.update();
 
@@ -154,8 +155,5 @@ void mouseMoved(){
             s.unsetHighlight();
         }
     }
-    
-    if ( mouseX > CANVAS_DIV*width ) {
-      detail.mouseOver( mouseX, mouseY );
-    }
+
 }

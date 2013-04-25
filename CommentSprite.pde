@@ -17,7 +17,7 @@ class CommentSprite extends Sprite {
     }
 
     void update(){
-        //clearLines();
+        clearLines();
     }
 
     void draw() {

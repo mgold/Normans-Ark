@@ -73,7 +73,9 @@ class DetailSprite extends Sprite implements Page {
     }
 
     void update(){
-        x = bound(w, x, width-( width*( 1-CANVAS_DIV ) ) ); // TODO change this
+        if ( mouseX > CANVAS_DIV*width ) {
+          mouseOver( mouseX, mouseY );
+        }
     }
 
     void draw() {
