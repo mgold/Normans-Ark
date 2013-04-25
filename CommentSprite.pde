@@ -31,7 +31,7 @@ class CommentSprite extends Sprite {
             textSize(COMMENT_LINE_HEIGHT);
             textAlign(LEFT, TOP);
             fill(#000000);
-            text(line, x+MARGIN, y+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1));
+            text(line, x+MARGIN, y+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1), w, COMMENT_LINE_HEIGHT*2);
         }
 
     }
