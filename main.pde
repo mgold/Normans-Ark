@@ -3,8 +3,8 @@ static final int DEFAULT_WIDTH = 800;
 static final float DEFAULT_TEXT_SIZE = 12;
 static final float CANVAS_DIV = .6;
 static final float MARGIN = .0125;
-static final float COMMENT_LINE_HEIGHT = 30;
-static final float COMMENT_LINE_MARGIN = 10;
+static final float COMMENT_LINE_HEIGHT = 12;
+static final float COMMENT_LINE_MARGIN = 8;
 static final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
 static final float CIRCLESPACING = 5.0;
 

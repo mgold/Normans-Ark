@@ -63,7 +63,7 @@ def unitErrors(witness):
 
 
 def umlErrors(witness):
-    comment = [split(witness)[1], split(witness)[3][0]]
+    comment = umlComment(witness)
     if "uncaught exception" in witness:
         return Error(witness[rindex(witness, ' ')+1:-2], "Exception"), comment
     elif "CPU time" in witness:
@@ -81,6 +81,15 @@ def umlErrors(witness):
     else:
         stderr.write('Warning: Unrecognized witness "'+witness+'"\n')
         return None
+
+def umlComment(witness):
+    quotedelim = split(witness, '"');
+    term = ' '.join(quotedelim[1].split())
+    if "uML type error" in witness:
+        shouldbe = "type error"
+    else:
+        shouldbe = quotedelim[3]
+    return ["Term "+term, "Is "+shouldbe]
 
 ############################################################
 # There should be no need to make changes below this line. #
