@@ -65,7 +65,7 @@ def unitErrors(witness):
 def umlErrors(witness):
     comment = umlComment(witness)
     if "uncaught exception" in witness:
-        return Error(witness[rindex(witness, ' ')+1:-2], "Exception"), comment
+        return Error(witness[rindex(witness, ' ')+1:-3], "Exception"), comment
     elif "CPU time" in witness:
         return Error("CPU Time", "Runtime"), comment
     elif "wrote the error message" in witness:
@@ -84,13 +84,14 @@ def umlErrors(witness):
 
 def umlComment(witness):
     quotedelim = split(witness, '"');
+    test = split(witness)[1]+"-"+split(witness)[3][0]
     term = ' '.join(quotedelim[1].split())
     if "uML type error" in witness:
         shouldbe = "type error"
     else:
         shouldbe = quotedelim[3]
     if "uncaught exception" in witness:
-        got = "exception "+witness[rindex(witness, ' ')+1:-2]
+        got = "exception "+witness[rindex(witness, ' ')+1:-3]
     elif "CPU time" in witness:
         got = "CPU timeout"
     elif "signalled a bug in type inference" in witness:
@@ -112,7 +113,7 @@ def umlComment(witness):
     else:
         stderr.write('Warning: Unable to finish comment for "'+witness+'"\n')
         return ["Term "+term, "Is "+shouldbe]
-    return ["Term "+term, "Is "+shouldbe, "Got "+got]
+    return ["Test "+test,"Term "+term, "Is "+shouldbe, "Got "+got]
 
 ############################################################
 # There should be no need to make changes below this line. #
