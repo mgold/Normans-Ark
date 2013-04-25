@@ -6,6 +6,7 @@ class BarSprite extends Sprite {
   private ErrorModel error;
   private ArrayList<MiniBarSprite> parts;
   private float proportion = -1;
+  private boolean onPage = false;
 
     BarSprite( StudentModel studentModel, ErrorModel errorModel, float _x, float _y, float _w, float _h ){
         super();
@@ -24,6 +25,14 @@ class BarSprite extends Sprite {
       return proportion;
     }
     
+    boolean isOnPage() {
+      return this.onPage; 
+    }
+    
+    void setOnPage( boolean onPage ) {
+      this.onPage = onPage; 
+    }
+
     void setY(float inY) {
       super.setY(inY);
       
@@ -115,7 +124,7 @@ class BarSprite extends Sprite {
       return null;
     }
     
-    int whichTest( int _x, int _y ) {
+    int whichTest( int _x, int _y ) {      
       for ( MiniBarSprite part : parts ) {
         if ( part.intersects( _x, _y ) ) {
           return part.whichTest( _x, _y );
@@ -126,6 +135,8 @@ class BarSprite extends Sprite {
     }
 
     boolean intersects( int _x, int _y ) {
+      if ( !this.onPage ) return false;
+
       for ( MiniBarSprite part : parts ) {
         if ( part.intersects( _x, _y ) ) {
             return true;
@@ -136,6 +147,8 @@ class BarSprite extends Sprite {
     }
 
     void mouseClick( int _x, int _y ) {
+      if ( !this.onPage ) return;
+
       for ( MiniBarSprite part : parts ) {
         if ( part.intersects( _x, _y ) ) {
           part.mouseClick( _x, _y );
@@ -144,9 +157,11 @@ class BarSprite extends Sprite {
     }
     
     void mouseOver( int _x, int _y ) {
+      if ( !this.onPage ) return;
+      
       for ( MiniBarSprite part : parts ) {
         if ( part.intersects( _x, _y ) ) {
-           //print( "Mousing over test " + part.whichTest( _x, _y ) + " of " + part.getError().getName() + "\n" );
+          part.mouseOver( _x, _y );
         }
       }
     }
@@ -183,6 +198,10 @@ class BarSprite extends Sprite {
       
       ErrorModel getError() {
         return this.error; 
+      }
+      
+      void mouseOver( int _x, int _y ) {
+        this.error.setAsComment( whichTest( _x, _y ) ); 
       }
       
       void mouseClick( int _x, int _y ) {
