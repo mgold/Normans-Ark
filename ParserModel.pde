@@ -20,18 +20,20 @@ class ParserModel{
             if (line.length == 1){
                 break;
             }
-            if (line[0] == "|"){
-                ; //add comment
-            }else{
                 errors.add(new ErrorModel(line[0], line[1], float(line[2]), int(line[3])));
                 i++;
-            }
         }
 
         int numStudents = int(line[0]);
+        StudentModel mostRecent = null;
         for (i++; i < lines.length; i++){
-            String name = split(lines[i], ',')[0];
-            students.put(name, new StudentModel(lines[i]));
+            String fullline = lines[i];
+            if (fullline.startsWith("|")){
+                mostRecent.addComment(split(fullline, '|'));
+            }else{
+                mostRecent = new StudentModel(fullline);
+                students.put(split(fullline, ',')[0], mostRecent);
+            }
         }
 
         return commentLines;

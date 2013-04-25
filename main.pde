@@ -20,6 +20,7 @@ void setup(){
     textSize(DEFAULT_TEXT_SIZE);
 
     data = new DataModel();
+    data.parse();
     detail = new DetailSprite(null);
     comment = new CommentSprite(data.getNumCommentLines());
 
@@ -85,12 +86,6 @@ void draw(){
     }
     comment.update();
     detail.update();
-
-    //temporary
-    String cmnt [] = new String [2];
-    cmnt[0] = "foo";
-    cmnt[1] = "bar";
-    comment.setLines(cmnt);
 
     for (Sprite s : circles){
         s.draw();

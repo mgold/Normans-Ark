@@ -3,7 +3,7 @@ class ErrorModel{
     private String category;
     private float gradeGivenError;
     private int nfailers;
-    private String[][] comments;
+    private ArrayList<String[]> comments;
     private int logicalCommentSize;
 
     ErrorModel(String n, String cat, float gge, int flrs){
@@ -11,7 +11,7 @@ class ErrorModel{
         category = cat;
         gradeGivenError = gge;
         nfailers = flrs;
-        logicalCommentSize = 0;
+        comments = new ArrayList();
     }
 
     String getName(){
@@ -31,15 +31,12 @@ class ErrorModel{
     }
 
     void addComment(String [] newComment){
-        if (logicalCommentSize < comments.length){
-            comments[logicalCommentSize] = newComment;
-            logicalCommentSize++;
-        }
+        comments.add(newComment);
     }
 
     void setAsComment(int testNum){
-        if (0 <= testNum && testNum < comments.length){
-            comment.setLines(comments[testNum]);
+        if (0 <= testNum && testNum < comments.size()){
+            comment.setLines(comments.get(testNum));
         }
     }
 

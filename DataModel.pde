@@ -11,9 +11,13 @@ class DataModel{
         categories = new ArrayList();
         students = new HashMap();
         circles = new HashMap();
+        numCommentLines = 0;
+        clearSelected();
+    }
+
+    void parse(){
         ParserModel parser = new ParserModel();
         numCommentLines = parser.parse("data.csv", categories, errors, students);
-        clearSelected();
     }
 
     int getNumStudents(){
