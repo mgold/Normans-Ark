@@ -119,9 +119,6 @@ def umlComment(witness):
 # There should be no need to make changes below this line. #
 ############################################################
 
-from sys import stderr
-from collections import Counter
-
 class Error:
     def __init__(self, name, cat):
         self.name = name
@@ -178,13 +175,17 @@ class Student:
 
 if __name__ == "__main__":
     from sys import argv;
-    from string import lower, split, join, rindex, version_info
+    from sys import stderr, version_info
+
     if version_info[0] != 2 or version_info[1] != 7:
         stderr.write("Error: Must use Python 2.7.\n")
         exit();
     if len(argv) != 2:
         stderr.write("Error: Must supply exactly 1 data file.\n")
         exit();
+
+    from collections import Counter
+    from string import lower, split, join, rindex
 
     filename = argv[1]
     numCommentLines = 0
