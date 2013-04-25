@@ -63,7 +63,7 @@ def unitErrors(witness):
 
 
 def umlErrors(witness):
-    comment = [split(witness)[1], split(witness)[3]]
+    comment = [split(witness)[1], split(witness)[3][0]]
     if "uncaught exception" in witness:
         return Error(witness[rindex(witness, ' ')+1:-2], "Exception"), comment
     elif "CPU time" in witness:

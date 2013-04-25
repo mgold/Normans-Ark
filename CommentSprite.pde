@@ -17,7 +17,7 @@ class CommentSprite extends Sprite {
     }
 
     void update(){
-        clearLines();
+        //clearLines();
     }
 
     void draw() {
@@ -29,7 +29,7 @@ class CommentSprite extends Sprite {
         for (int i = 0; i<numLines; i++){
             String line = lines[i];
             textSize(COMMENT_LINE_HEIGHT);
-            textAlign(LEFT, BOTTOM);
+            textAlign(LEFT, TOP);
             fill(#000000);
             text(line, x+MARGIN, y+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1));
         }

@@ -29,7 +29,12 @@ class ParserModel{
         for (i++; i < lines.length; i++){
             String fullline = lines[i];
             if (fullline.startsWith("|")){
-                mostRecent.addComment(split(fullline, '|'));
+                String onetoomany [] = split(fullline, '|');
+                String actual [] = new String [onetoomany.length -1];
+                for (int j = 1; j < onetoomany.length; j++){
+                    actual[j-1] = onetoomany[j];
+                }
+                mostRecent.addComment(actual);
             }else{
                 mostRecent = new StudentModel(fullline);
                 students.put(split(fullline, ',')[0], mostRecent);
