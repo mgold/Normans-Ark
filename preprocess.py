@@ -89,7 +89,30 @@ def umlComment(witness):
         shouldbe = "type error"
     else:
         shouldbe = quotedelim[3]
-    return ["Term "+term, "Is "+shouldbe]
+    if "uncaught exception" in witness:
+        got = "exception "+witness[rindex(witness, ' ')+1:-2]
+    elif "CPU time" in witness:
+        got = "CPU timeout"
+    elif "signalled a bug in type inference" in witness:
+        if "typed-untypeable" in witness:
+            got = "signaled bug: "+quotedelim[3]
+        else:
+            got = "signaled bug: "+quotedelim[5]
+    elif "typed-incorrectly" in witness:
+        got = quotedelim[5]
+    elif "did-not-type" in witness:
+        got = "type error: "+quotedelim[5]
+    elif "wrote the error message" in witness:
+        if "typed-untypeable" in witness:
+            got = "error: "+quotedelim[3]
+        else:
+            got = "error: "+quotedelim[5]
+    elif "typed-untypeable" in witness:
+        got = quotedelim[3]
+    else:
+        stderr.write('Warning: Unable to finish comment for "'+witness+'"\n')
+        return ["Term "+term, "Is "+shouldbe]
+    return ["Term "+term, "Is "+shouldbe, "Got "+got]
 
 ############################################################
 # There should be no need to make changes below this line. #
