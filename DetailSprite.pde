@@ -13,12 +13,12 @@ class DetailSprite extends Sprite implements Page {
         super();
         x = width-(width*(1-CANVAS_DIV)); // TODO change this
         y = MARGIN; // TODO change this
-        h = height;
+        h = height - comment.getH() - (MARGIN*DEFAULT_HEIGHT);
         w = width*( 1-CANVAS_DIV );
         setModel(errorModel);
         this.bars = new ArrayList<BarSprite>();
         
-        pagination = new PaginationSprite(getX() +  (w / 2), h - 120);
+        pagination = new PaginationSprite(getX() +  (w / 2), h - 40 );
         pagination.setPageListener(this);
     }
 
@@ -117,7 +117,7 @@ class DetailSprite extends Sprite implements Page {
 
               if ( i >= firstBarIndex && i < lastBarIndex ) {
                 b.setOnPage( true );
-                b.setY(getY() + (4 * MARGIN * DEFAULT_HEIGHT) + (++pageBarCounter * DEFAULT_BAR_SEP));
+                b.setY(getY() + (3 * MARGIN * DEFAULT_HEIGHT) + (++pageBarCounter * DEFAULT_BAR_SEP));
                 b.draw();
               } else {
                 b.setOnPage( false );

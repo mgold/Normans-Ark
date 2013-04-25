@@ -13,7 +13,7 @@ class CommentSprite extends Sprite {
             h = 0;
         }
         y = height-h;
-        w = width*(CANVAS_DIV);
+        w = width;
     }
 
     void update(){

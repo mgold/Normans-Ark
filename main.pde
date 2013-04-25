@@ -21,8 +21,8 @@ void setup(){
 
     data = new DataModel();
     data.parse();
-    detail = new DetailSprite(null);
     comment = new CommentSprite(data.getNumCommentLines());
+    detail = new DetailSprite(null);
 
     circles = new ArrayList();
     for (int i = 0; i < data.getNumErrors(); i++){
