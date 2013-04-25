@@ -1,0 +1,7 @@
+Scenario
+========
+Throughout the design and implementation process, we came across a number of interesting patterns. These included:
+
+1. Interesting and varying projected grades given errors. For the 105: uML dataset, there was a large distribution in how detrimental a particular error could be: some resulted in an average score of 0% and others 82%. In the 40 dataset, this range was much more condensed: the average grades given an error fell between 70% and 90%. This gives insight into interesting characteristics of both the assignments and the programming languages.
+
+2. Error patterns: some errors tended to occur together more commonly than others. For the 40: Unit dataset, termination and cells or cells and memory occurred together frequently, but termination and memory didn't crop up together much. Similarly, cell errors frequently appeared in droves: if you had one cell error, you were likely to have more. In the 105: uML dataset, type inference errors were most common, and they too appeared in multiples quite frequently. Exceptions, which were most detrimental to the grades (and sometimes resulted in 0% passing tests), happened a lot in isolation. On the other hand, runtime errors seemed to be equal opportunity events.
