@@ -8,9 +8,10 @@
 # pickErrorFun decides which error function to call based on the file name.
 
 def pickErrorFun(filename):
+    filename = lower(filename)
     if "unit" in filename:
         return unitErrors
-    elif "uml" in filename or "Additional" in filename:
+    elif "uml" in filename or "additional" in filename:
         return umlErrors
     else:
         stderr.write("Warning: No customized witness detection available for file.\n")
