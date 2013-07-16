@@ -49,6 +49,13 @@ class ErrorModel{
         }
     }
 
+    String getTestName(int testNum){
+        if (0 <= testNum && testNum < bolded.size()){
+            return comments.get(testNum)[0];
+        }
+        return "";
+    }
+
     boolean hasBoldComment(int testNum){
         if (0 <= testNum && testNum < bolded.size()){
             return bolded.get(testNum).equals("t");

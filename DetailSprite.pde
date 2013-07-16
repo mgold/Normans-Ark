@@ -73,8 +73,10 @@ class DetailSprite extends Sprite implements Page {
     }
 
     void update(){
-        if ( mouseX > CANVAS_DIV*width ) {
+        if ( mouseX > CANVAS_DIV*width + DEFAULT_BAR_WIDTH*w) {
           mouseOver( mouseX, mouseY );
+        }else{
+            currentTest = "";
         }
     }
 

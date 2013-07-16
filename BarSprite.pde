@@ -1,6 +1,8 @@
 static final float DEFAULT_BAR_HEIGHT = 25;
 static final float DEFAULT_BAR_WIDTH = .5;
 
+String currentTest = "";
+
 class BarSprite extends Sprite {
   private StudentModel student;
   private ErrorModel error;
@@ -203,9 +205,19 @@ class BarSprite extends Sprite {
                   rect(x+widthPerTest*i-1, y, 2, 5);
                   rect(x+widthPerTest*i-1, y+h-5, 2, 5);
               }
-              if (! isPassed && error.hasBoldComment(i+1)){
-                  fill(#000000);
-                  ellipse(x+widthPerTest*i+widthPerTest/2-1, y+h/2, 3, 3);
+              if (! isPassed){
+                  int testNum = i+1;
+                  if (error.hasBoldComment(testNum)){
+                      fill(#000000);
+                      ellipse(x+widthPerTest*i+widthPerTest/2-1, y+h/2, 3, 3);
+                  }
+                  if (error.getTestName(testNum) == currentTest){
+                      strokeWeight(1);
+                      stroke(#000000);
+                      noFill();
+                      rect(x+widthPerTest*i+widthPerTest/2-1, y+h/2-10, 1, 20);
+                      noStroke();
+                  }
               }
           }
       }
@@ -215,7 +227,9 @@ class BarSprite extends Sprite {
       }
       
       void mouseOver( int _x, int _y ) {
-        this.error.setAsComment( whichTest( _x, _y ) ); 
+        int testNum = whichTest( _x, _y );
+        this.error.setAsComment(testNum); 
+        currentTest = this.error.getTestName(testNum);
       }
       
       void mouseClick( int _x, int _y ) {
