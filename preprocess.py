@@ -1,13 +1,18 @@
 # Norman's Ark Preprocessor
 #
-# Error functions are expected to return Error(name, category)
-# where name and category are strings. Optionally, they may also return
-# an array of strings to be shown as comments. If comments are returned
-# by an error function, they must be returned in all cases.
-#
-# pickErrorFun decides which error function to call based on the file name.
+# Error functions are expected to return Error(name, category) where name and
+# category are strings. Optionally, they may also return an array of strings to
+# be shown as comments, one element per line. If comments are returned by an
+# error function, they must be returned in all cases.
+
+import re
+
+#matches are bolded in comments for uML data
+UML_PATTERN = 'let[^ (]*'
+
 
 def pickErrorFun(filename):
+    """decides which error function to call based on the file name."""
     filename = lower(filename)
     if "unit" in filename:
         return unitErrors
@@ -114,6 +119,9 @@ def umlComment(witness):
     else:
         stderr.write('Warning: Unable to finish comment for "'+witness+'"\n')
         return ["Term "+term, "Is "+shouldbe]
+    term     = re.sub(UML_PATTERN, '&\g<0>&', term)
+    shouldbe = re.sub(UML_PATTERN, '&\g<0>&', shouldbe)
+    got      = re.sub(UML_PATTERN, '&\g<0>&', got)
     return ["Test "+test,"Term "+term, "Is "+shouldbe, "Got "+got]
 
 ############################################################

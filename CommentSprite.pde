@@ -1,3 +1,5 @@
+final String BOLD_TOKEN = "&";
+
 class CommentSprite extends Sprite {
     private int numLines;
     private int maxNumLines;
@@ -26,12 +28,22 @@ class CommentSprite extends Sprite {
         fill(colorModel.getDetailBkgdColor());
         rect( x, y, w, h );
 
+        textSize(COMMENT_LINE_HEIGHT);
+        textAlign(LEFT, CENTER);
+        fill(#000000);
+        stroke(#000000);
         for (int i = 0; i<numLines; i++){
             String line = lines[i];
-            textSize(COMMENT_LINE_HEIGHT);
-            textAlign(LEFT, TOP);
-            fill(#000000);
-            text(line, x+(MARGIN*DEFAULT_WIDTH), y+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1));
+            String[] tokens = splitTokens(line, BOLD_TOKEN);
+            float xoffset = 0.;
+            boolean bold = false;
+            for (String token : tokens){
+                textSize(bold ? COMMENT_LINE_HEIGHT * 1.2 : COMMENT_LINE_HEIGHT);
+                fill(bold ? #000000 : #222222);
+                bold = !bold;
+                text(token, x+(MARGIN*DEFAULT_WIDTH)+xoffset, y+4+COMMENT_LINE_HEIGHT*i+COMMENT_LINE_MARGIN*(i+1));
+                xoffset += textWidth(token);
+            }
         }
 
     }
