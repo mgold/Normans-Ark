@@ -170,6 +170,8 @@ class BarSprite extends Sprite {
       private ErrorModel error;
       private boolean highlighted;
       boolean isPassed = false;
+      int numTests;
+      float widthPerTest;
       
       public MiniBarSprite( ErrorModel error, boolean highlighted, float _x, float _y, float _w, float _h ) {
         this.error = error;
@@ -182,20 +184,32 @@ class BarSprite extends Sprite {
         String cat = error.getCategory();
         if (cat != "") {
           this.fc = colorModel.getColor( data.colorIDForCategory( cat ) );
+          this.numTests = student.timesFailed( data.getErrorId( error ) );
         } else {
           isPassed = true;
           this.fc = colorModel.getPassingColor();
+          this.numTests = student.timesPassed();
         }
+        this.widthPerTest = w / (float) numTests;
       }
       
       void draw() {
-        super.draw(); 
-
-        fill( fc );
-        
-        rect( x, y, w, h );
+          super.draw();
+          fill( fc );
+          rect( x, y, w, h );
+          for (int i = 0; i < numTests; i++){
+              if (i > 0){
+                  fill(colorModel.getDetailBkgdColor());
+                  rect(x+widthPerTest*i-1, y, 2, 5);
+                  rect(x+widthPerTest*i-1, y+h-5, 2, 5);
+              }
+              if (! isPassed && error.hasBoldComment(i+1)){
+                  fill(#000000);
+                  ellipse(x+widthPerTest*i+widthPerTest/2-1, y+h/2, 3, 3);
+              }
+          }
       }
-      
+
       ErrorModel getError() {
         return this.error; 
       }
@@ -214,14 +228,9 @@ class BarSprite extends Sprite {
       }
       
       int whichTest( int _x, int _y ) {
-        int numTests;
-        if ( isPassed ) {
-          numTests = student.timesPassed();
-        } else {
-          numTests = student.timesFailed( data.getErrorId( error ) );
+        if (_y < y || _y > y+h || _x < x){
+            return -1;
         }
-
-        float widthPerTest = w / (float) numTests;
         float offset = _x - x; // the offset from the start of this minibar
         
         int testNum = ceil( offset/widthPerTest );
@@ -238,12 +247,8 @@ class BarSprite extends Sprite {
       }
       
       boolean intersects( int _x, int _y ) {
-        if ( _x >= x && _x <= x + w &&
-             _y >= y && _y <= y + h ) {
-           return true;
-         } else {
-           return false;
-         } 
+            return ( _x >= x && _x <= x + w &&
+                     _y >= y && _y <= y + h );
       }
 
       void update(){

@@ -4,6 +4,7 @@ class ErrorModel{
     private float gradeGivenError;
     private int nfailers;
     private ArrayList<String[]> comments;
+    private ArrayList<String> bolded;
     private int logicalCommentSize;
 
     ErrorModel(String n, String cat, float gge, int flrs){
@@ -12,6 +13,7 @@ class ErrorModel{
         gradeGivenError = gge;
         nfailers = flrs;
         comments = new ArrayList();
+        bolded = new ArrayList();
     }
 
     String getName(){
@@ -32,12 +34,26 @@ class ErrorModel{
 
     void addComment(String [] newComment){
         comments.add(newComment);
+        for (String commentLine : newComment){
+            if (commentLine.indexOf(COMMENT_BOLD_TOKEN) != -1){
+                bolded.add("t"); //Because Boolean wrappers don't exist in p.js
+                return;
+            }
+        }
+        bolded.add("f");
     }
 
     void setAsComment(int testNum){
         if (0 <= testNum && testNum < comments.size()){
             comment.setLines(comments.get(testNum));
         }
+    }
+
+    boolean hasBoldComment(int testNum){
+        if (0 <= testNum && testNum < bolded.size()){
+            return bolded.get(testNum).equals("t");
+        }
+        return false;
     }
 
 }

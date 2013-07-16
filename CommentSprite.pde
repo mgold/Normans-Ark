@@ -1,5 +1,3 @@
-final String BOLD_TOKEN = "&";
-
 class CommentSprite extends Sprite {
     private int numLines;
     private int maxNumLines;
@@ -34,7 +32,7 @@ class CommentSprite extends Sprite {
         stroke(#000000);
         for (int i = 0; i<numLines; i++){
             String line = lines[i];
-            String[] tokens = splitTokens(line, BOLD_TOKEN);
+            String[] tokens = splitTokens(line, COMMENT_BOLD_TOKEN);
             float xoffset = 0.;
             boolean bold = false;
             for (String token : tokens){

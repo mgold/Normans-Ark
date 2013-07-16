@@ -7,6 +7,7 @@ static final float COMMENT_LINE_HEIGHT = 12;
 static final float COMMENT_LINE_MARGIN = 8;
 static final float MAXCIRCLESIZE = 0.4 * DEFAULT_HEIGHT;
 static final float CIRCLESPACING = 5.0;
+final String COMMENT_BOLD_TOKEN = "&";
 
 DataModel data;
 ArrayList<CircleSprite> circles;

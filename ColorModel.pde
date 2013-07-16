@@ -1,7 +1,7 @@
 class ColorModel {
   protected final color PASSING_COLOR = color( 0, 90, 0, 90 );
   protected final color ACTIVE_ERROR_COLOR = color( 225, 0, 0 );
-  protected final color DETAIL_BKGD_COLOR = color(212, 216, 223, 100);
+  protected final color DETAIL_BKGD_COLOR = color(242, 243, 245);
   protected final color c1 = color(23, 69, 92);
   protected final color c2 = color(254, 131, 51);
   protected final color c3 = color(225, 202, 171);
