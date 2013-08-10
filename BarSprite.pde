@@ -1,7 +1,7 @@
 static final float DEFAULT_BAR_HEIGHT = 25;
 static final float DEFAULT_BAR_WIDTH = .5;
 
-String currentTest = "";
+String currentTest = "default";
 
 class BarSprite extends Sprite {
   private StudentModel student;
